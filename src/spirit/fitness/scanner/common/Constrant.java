@@ -4,14 +4,22 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 
+import spirit.fitness.scanner.model.Locationbean;
+import spirit.fitness.scanner.model.ModelDailyReportbean;
+import spirit.fitness.scanner.model.ModelZone2bean;
+import spirit.fitness.scanner.model.Modelbean;
 
 
 public class Constrant {
-	//public static String webUrl = "http://172.16.2.96:5000";
-	public static String webUrl = "http://172.16.2.6";
-	public static String weburlprefix = "FGService/api/";
+	public static String webUrl = "http://172.16.2.96:5000";
+	//public static String webUrl = "http://172.16.2.6";
+	//public static String weburlprefix = "FGService/api/";
 	
-
+	public static HashMap<String,Modelbean> models;
+	public static HashMap<String,Locationbean> locations;
+	public static HashMap<String,ModelDailyReportbean> dailyReport;
+	public static List<ModelZone2bean> modelZone2List;
+	public static HashMap<String,ModelZone2bean> modelZone2;
 	
 	
 	
