@@ -27,7 +27,7 @@ public interface ContainerCallback {
 	Call<List<Containerbean>> getItemsBycontainerNo(@Path("containerNo") String containerNo);
 
 	//Post ArrayList items
-	@POST("FGService/api/Containers")
+	@POST("api/Containers")
 	Call<List<Containerbean>> createItem(@Body List<Containerbean> itembean);
 
 	
