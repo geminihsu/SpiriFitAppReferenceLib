@@ -58,9 +58,13 @@ public interface InventoryCallback {
 	@PUT("FGService/api/FGInventory")
 	Call<List<Itembean>> updateItem(@Body List<Itembean> itembean);
 
-	@PUT("FGService/api/FGInventory/SN/NotExist")
-	Call<List<Itembean>> getItemsLocationBySNExits(@Body List<Itembean> itembean);
+	@PUT("FGService/api/FGInventory/SN/CheckReceiveItem")
+	Call<List<Itembean>> getMoveItemsBySNxits(@Body List<Itembean> itembean);
 
+	@PUT("FGService/api/FGInventory/SN/CheckMoveItem")
+	Call<List<Itembean>> getReceiveItemExits(@Body List<Itembean> itembean);
+
+	
 	@PUT("FGService/api/FGInventory/SN/Zone2/{salesOrder}")
 	Call<List<Itembean>> getItemsZone2BySNExits(@Path("salesOrder") String salesOrder,@Body List<Itembean> itembean);
 
