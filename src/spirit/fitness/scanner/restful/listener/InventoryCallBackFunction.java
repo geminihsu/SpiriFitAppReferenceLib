@@ -10,6 +10,7 @@ import spirit.fitness.scanner.model.Itembean;
 public interface InventoryCallBackFunction {
 	public void resultCode(int code);
 	public void getInventoryItems(List<Itembean> items);
-	public void checkInventoryItems(List<Itembean> items);
+	public void checkMoveItems(List<Itembean> items);
+	public void checkReceiveItem(List<Itembean> items);
 	public void checkInventoryZone2Items(int resultCode,List<Itembean> items);
 }

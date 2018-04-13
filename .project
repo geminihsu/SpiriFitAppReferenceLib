@@ -3,8 +3,8 @@
 	<name>SpiriFitAppReferenceLibrary</name>
 	<comment></comment>
 	<projects>
-		<project>ContainerApp</project>
-		<project>ServerApp</project>
+		<project>SpiritFitContainer</project>
+		<project>SpiritFitFinishGoodsApp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

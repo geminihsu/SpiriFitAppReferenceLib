@@ -82,12 +82,12 @@ public class FGRepositoryImplRetrofit {
 		return result;
 	}
 
-	public List<Itembean> getItemsLocationBySNList(List<Itembean> items) throws Exception {
+	public List<Itembean> getReceiveItemBySNList(List<Itembean> items) throws Exception {
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		InventoryCallback service = retrofit.create(InventoryCallback.class);
 		
-		Response<List<Itembean>> request = service.getItemsLocationBySNExits(items).execute();
+		Response<List<Itembean>> request = service.getReceiveItemExits(items).execute();
 		int code = request.code();
 		
 		List<Itembean> result = null;
@@ -95,10 +95,32 @@ public class FGRepositoryImplRetrofit {
 		      result = request.body();
 		
 		if (inventoryServiceCallBackFunction != null)
-			inventoryServiceCallBackFunction.checkInventoryItems(result);
+			inventoryServiceCallBackFunction.checkReceiveItem(result);
 		
 		return result;
 	}
+	
+	
+	public List<Itembean> getMoveItemBySNList(List<Itembean> items) throws Exception {
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.addConverterFactory(GsonConverterFactory.create()).build();
+		InventoryCallback service = retrofit.create(InventoryCallback.class);
+		
+		Response<List<Itembean>> request = service.getMoveItemsBySNxits(items).execute();
+		int code = request.code();
+		
+		List<Itembean> result = null;
+		if (code == HttpRequestCode.HTTP_REQUEST_OK) 
+		      result = request.body();
+		
+		if (inventoryServiceCallBackFunction != null)
+			inventoryServiceCallBackFunction.checkMoveItems(result);
+		
+		return result;
+	}
+	
+
+	
 	
 	public List<Itembean> getItemsZone2BySNList(String salesOrder,List<Itembean> items) throws Exception {
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
