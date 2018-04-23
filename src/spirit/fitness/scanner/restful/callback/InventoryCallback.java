@@ -58,10 +58,10 @@ public interface InventoryCallback {
 	@PUT("FGService/api/FGInventory")
 	Call<List<Itembean>> updateItem(@Body List<Itembean> itembean);
 
-	@PUT("FGService/api/FGInventory/SN/CheckReceiveItem")
+	@PUT("FGService/api/FGInventory/SN/CheckMoveItem")
 	Call<List<Itembean>> getMoveItemsBySNxits(@Body List<Itembean> itembean);
 
-	@PUT("FGService/api/FGInventory/SN/CheckMoveItem")
+	@PUT("FGService/api/FGInventory/SN/CheckReceiveItem")
 	Call<List<Itembean>> getReceiveItemExits(@Body List<Itembean> itembean);
 
 	
