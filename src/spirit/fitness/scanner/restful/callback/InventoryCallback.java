@@ -65,12 +65,12 @@ public interface InventoryCallback {
 	Call<List<Itembean>> getMoveItemsBySNxits(@Body List<Itembean> itembean);
 
 	
-	@PUT("FGService/api/FGInventory/SN/Zone2/{salesOrder}")
+	@PUT("api/FGInventory/SN/Zone2/{salesOrder}")
 	Call<List<Itembean>> getItemsZone2BySNExits(@Path("salesOrder") String salesOrder,@Body List<Itembean> itembean);
 
 	
 	//Delete no work
-	@DELETE("FGService/api/FGInventory")
+	@DELETE("api/FGInventory")
 	Call<List<Itembean>> deleteItem(@Body List<Itembean> itembean);
 
 }
