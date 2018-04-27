@@ -3,7 +3,9 @@ package spirit.fitness.scanner.restful;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -123,7 +125,15 @@ public class FGRepositoryImplRetrofit {
 	
 	
 	public List<Itembean> getItemsZone2BySNList(String salesOrder,List<Itembean> items) throws Exception {
+		
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(1, TimeUnit.MINUTES)
+		        .readTimeout(30, TimeUnit.SECONDS)
+		        .writeTimeout(15, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		InventoryCallback service = retrofit.create(InventoryCallback.class);
 		
@@ -247,9 +257,17 @@ public class FGRepositoryImplRetrofit {
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		InventoryCallback service = retrofit.create(InventoryCallback.class);
-		Call<List<Itembean>> data = service.deleteItem(items);
+		Call<List<Itembean>> data = service.deleteItems(items);
 		return data.execute().body();
 	}
+	
+	/*public List<Itembean> deleteItem(List<Itembean> items) throws Exception {
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.addConverterFactory(GsonConverterFactory.create()).build();
+		InventoryCallback service = retrofit.create(InventoryCallback.class);
+		Call<List<Itembean>> data = service.deleteItem(items);
+		return data.execute().body();
+	}*/
 
 	public Itembean findItemBySeq(Integer seq) {
 		return null;
