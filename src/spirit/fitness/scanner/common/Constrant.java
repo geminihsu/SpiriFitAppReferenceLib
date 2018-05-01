@@ -20,9 +20,7 @@ public class Constrant {
 	public static HashMap<String,ModelDailyReportbean> dailyReport;
 	public static List<ModelZone2bean> modelZone2List;
 	public static HashMap<String,ModelZone2bean> modelZone2;
-	
-	
-	
+	  
 	//Zone mapping Table key : zone number, value : location number
     public static int ZONE_CODE_LEN_LIMIT = 3;
     public static int ZONE_CODE_1 = 1;
