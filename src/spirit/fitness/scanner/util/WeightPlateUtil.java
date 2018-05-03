@@ -7,8 +7,12 @@ public class WeightPlateUtil {
 	private static final String WEIGHT_PLATE_200Cartons = "990200";
 	private static final String WEIGHT_PLATE_90_150 = "990150";
 	
-	private static final String MA_902 = "790274";
-	private static final String  MA_906= "790675";
+	private static final String MA902 = "790274";
+	private static final String  MA906= "790675";
+	
+	private static final String MA900 = "790072";
+	private static final String MA901 = "790172";
+
 	
 	private static String MS7MODEL = "900MS7";
 	private static String LP7MODEL = "900LP7";
@@ -25,7 +29,7 @@ public class WeightPlateUtil {
 	
 	
 	public static boolean isCalfSupport(String item) {
-		if (item.equals(MA_902) || item.equals(MA_906))
+		if (item.equals(MA902) || item.equals(MA906) || item.equals(MA900)|| item.equals(MA901))
 			return true;
 
 		return false;
