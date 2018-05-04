@@ -3,7 +3,9 @@ package spirit.fitness.scanner.restful;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -60,7 +62,15 @@ public class ModelZoneMapRepositoryImplRetrofit {
 
 	//Retrieve Daily Report
 	public List<ModelDailyReportbean> getAllItems(String date) throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(1, TimeUnit.MINUTES)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(15, TimeUnit.SECONDS)
+		        .build();
+		
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 		ModelZoneMapCallback service = retrofit.create(ModelZoneMapCallback.class);
 		
