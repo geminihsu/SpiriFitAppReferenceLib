@@ -31,7 +31,6 @@ public class WeightPlateUtil {
 	public static boolean isCalfSupport(String item) {
 		if (item.equals(MA902) || item.equals(MA906) || item.equals(MA900)|| item.equals(MA901))
 			return true;
-
 		return false;
 	}
 	
