@@ -49,7 +49,17 @@ public class ModelZoneMapRepositoryImplRetrofit {
 
 	
 	public List<ModelZone2bean> getAllItemsQty() throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
+		
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(1, TimeUnit.MINUTES)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(15, TimeUnit.SECONDS)
+		        .build();
+		
+		
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 		ModelZoneMapCallback service = retrofit.create(ModelZoneMapCallback.class);
 		
