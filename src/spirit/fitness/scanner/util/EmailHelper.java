@@ -56,10 +56,9 @@ public class EmailHelper {
            Message message = new MimeMessage(session);
            message.setFrom(new InternetAddress("geminih@spiritfitness.com"));
            message.setRecipients(Message.RecipientType.TO,
-                   InternetAddress.parse("gemini612gemini@gmail.com"));
+                   InternetAddress.parse("spiritfitness.mail.service@gmail.com"));
            message.setSubject(scanDate +" Container #" + containInfo.ContainerNo );
            String containInfoTxt = CONTAINER_NO + containInfo.ContainerNo +"\n" + 
-        		   RECEIVED_DATE + containInfo.date +"\n" +
         		   SCANNED_DATE + scanDate + "\n" +
         		   MODEL_NO + modelNo + "\n" +
         		   MODEL_DESC + Constrant.models.get(modelNo).Desc + "\n" +
