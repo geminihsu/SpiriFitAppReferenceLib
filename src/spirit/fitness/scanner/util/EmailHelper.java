@@ -25,7 +25,7 @@ public class EmailHelper {
 	private final static String SERIAL_END = "Serial No. End : ";
 	private final static String QTY = "Quantity : ";
 
-	public static void sendMail(String scanDate, List<Containerbean> containInfo, String items) {
+	public static void sendMail(String scanDate, List<Containerbean> containInfo, String items,String email) {
 
 		final String username = "geminih@spiritfitness.com";
 		final String password = "$pirit3Ma1l";
@@ -50,21 +50,21 @@ public class EmailHelper {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("geminih@spiritfitness.com"));
 			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse("geminih@spiritfitness.com"));
+					InternetAddress.parse(email));
 			message.setSubject(scanDate + " Container #" + containInfo.get(0).ContainerNo);
 
 			String[] scanitems = items.split("\n");
-			String mailContent = "------------------------------------------------------------\n" ;
+			String mailContent = "------------------------------------------------------------<br>" ;
 
 			int startIndex = 0;
 			for (Containerbean container : containInfo) {
 				String itemsArray = "";
-				String containInfoTxt =  CONTAINER_NO + container.ContainerNo + "\n" + SCANNED_DATE + scanDate + "\n"
-						+ MODEL_NO + container.SNEnd.substring(0, 6) + "\n" + MODEL_DESC + Constrant.models.get(container.SNEnd.substring(0, 6)).Desc + "\n"
-						+ SERIAL_START + container.SNBegin + "\n" + SERIAL_END + container.SNEnd + "\n" + QTY
+				String containInfoTxt =  CONTAINER_NO + container.ContainerNo + "<br>" + SCANNED_DATE + scanDate + "<br>"
+						+ MODEL_NO + container.SNEnd.substring(0, 6) + "<br>" + MODEL_DESC + Constrant.models.get(container.SNEnd.substring(0, 6)).Desc + "<br>"
+						+ SERIAL_START + container.SNBegin + "<br>" + SERIAL_END + container.SNEnd + "<br>" + QTY
 						+ String.valueOf(Integer.valueOf(container.SNEnd.substring(10, 16))
 								- Integer.valueOf(container.SNBegin.substring(10, 16)) + 1)
-						+ "\n";
+						+ "<br>";
 
 				int qty = Integer.valueOf(container.SNEnd.substring(10, 16))- Integer.valueOf(container.SNBegin.substring(10, 16)) + 1;
 				String[] scanSN = new String[qty];
@@ -73,15 +73,16 @@ public class EmailHelper {
 				
 				for(String s : scanSN) 
 				{
-					itemsArray += s+"\n";
+					itemsArray += s+"<br>";
 				}
-				containInfoTxt += "------------------------------------------------------------\n" + "Scanned SN : \n"+"------------------------------------------------------------\n" + itemsArray;
+				containInfoTxt += "------------------------------------------------------------<br>" + "Scanned SN : <br>"+"------------------------------------------------------------<br>" + itemsArray;
 
-				mailContent += containInfoTxt +"--------------------------------------------------------\n";
+				mailContent += containInfoTxt +"--------------------------------------------------------<br>";
 			}
 			
 			
-			message.setText(mailContent);
+			//message.setText(mailContent);
+			message.setContent(mailContent,"text/html");
 			Transport.send(message);
 
 			System.out.println("Mail sent succesfully!");
