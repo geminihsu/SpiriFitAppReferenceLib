@@ -31,71 +31,71 @@ public class EmailHelper {
 	private final static String QTY = "Quantity : ";
 	
 
-    public static void sendMail(String scanDate, List<Containerbean> containInfo, String items) {
+	public static void sendMail(String scanDate, List<Containerbean> containInfo, String items,String email) {
 
-        final String username = "geminih@spiritfitness.com";
-        final String password = "$pirit3Ma1l";
+		final String username = "geminih@spiritfitness.com";
+		final String password = "$pirit3Ma1l";
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
 
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
 
-        try {
+		try {
 
-            // String timeStamp = new SimpleDateFormat("yyyy-MM-dd
-            // HH:mm:ss").format(Calendar.getInstance().getTime());
+			// String timeStamp = new SimpleDateFormat("yyyy-MM-dd
+			// HH:mm:ss").format(Calendar.getInstance().getTime());
 
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("geminih@spiritfitness.com"));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("geminih@spiritfitness.com"));
-            message.setSubject(scanDate + " Container #" + containInfo.get(0).ContainerNo);
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("geminih@spiritfitness.com"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(email));
+			message.setSubject(scanDate + " Container #" + containInfo.get(0).ContainerNo);
 
-            String[] scanitems = items.split("\n");
-            String mailContent = "------------------------------------------------------------\n" ;
+			String[] scanitems = items.split("\n");
+			String mailContent = "------------------------------------------------------------<br>" ;
 
-            int startIndex = 0;
-            for (Containerbean container : containInfo) {
-                String itemsArray = "";
-                String containInfoTxt =  CONTAINER_NO + container.ContainerNo + "\n" + SCANNED_DATE + scanDate + "\n"
-                        + MODEL_NO + container.SNEnd.substring(0, 6) + "\n" + MODEL_DESC + Constrant.models.get(container.SNEnd.substring(0, 6)).Desc + "\n"
-                        + SERIAL_START + container.SNBegin + "\n" + SERIAL_END + container.SNEnd + "\n" + QTY
-                        + String.valueOf(Integer.valueOf(container.SNEnd.substring(10, 16))
-                                - Integer.valueOf(container.SNBegin.substring(10, 16)) + 1)
-                        + "\n";
+			int startIndex = 0;
+			for (Containerbean container : containInfo) {
+				String itemsArray = "";
+				String containInfoTxt =  CONTAINER_NO + container.ContainerNo + "<br>" + SCANNED_DATE + scanDate + "<br>"
+						+ MODEL_NO + container.SNEnd.substring(0, 6) + "<br>" + MODEL_DESC + Constrant.models.get(container.SNEnd.substring(0, 6)).Desc + "<br>"
+						+ SERIAL_START + container.SNBegin + "<br>" + SERIAL_END + container.SNEnd + "<br>" + QTY
+						+ String.valueOf(Integer.valueOf(container.SNEnd.substring(10, 16))
+								- Integer.valueOf(container.SNBegin.substring(10, 16)) + 1)
+						+ "<br>";
 
-                int qty = Integer.valueOf(container.SNEnd.substring(10, 16))- Integer.valueOf(container.SNBegin.substring(10, 16)) + 1;
-                String[] scanSN = new String[qty];
-                System.arraycopy( scanitems, startIndex, scanSN, 0, qty );
-                startIndex= startIndex + qty;
-                
-                for(String s : scanSN) 
-                {
-                    itemsArray += s+"\n";
-                }
-                containInfoTxt += "------------------------------------------------------------\n" + "Scanned SN : \n"+"------------------------------------------------------------\n" + itemsArray;
+				int qty = Integer.valueOf(container.SNEnd.substring(10, 16))- Integer.valueOf(container.SNBegin.substring(10, 16)) + 1;
+				String[] scanSN = new String[qty];
+				System.arraycopy( scanitems, startIndex, scanSN, 0, qty );
+				startIndex= startIndex + qty;
+				
+				for(String s : scanSN) 
+				{
+					itemsArray += s+"<br>";
+				}
+				containInfoTxt += "------------------------------------------------------------<br>" + "Scanned SN : <br>"+"------------------------------------------------------------<br>" + itemsArray;
 
-                mailContent += containInfoTxt +"--------------------------------------------------------\n";
-            }
-            
-            
-            message.setText(mailContent);
-            Transport.send(message);
+				mailContent += containInfoTxt +"--------------------------------------------------------<br>";
+			}
+			
+			
+			//message.setText(mailContent);
+			message.setContent(mailContent,"text/html");
+			Transport.send(message);
 
+			System.out.println("Mail sent succesfully!");
 
-           System.out.println("Mail sent succesfully!");
-
-       } catch (MessagingException e) {
-           throw new RuntimeException(e);
-       }
-    }
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 }
