@@ -57,18 +57,17 @@ public class LocationHelper {
 			return "Zone 2";
 
 		else if (number == 3)
-			return "Return";
+            return "RTS";
+        else if (number == 4)
+            return "Show Room";
 
-		else if (number == 4)
-			return "Show Room";
+        else if (number == 5)
+            return "Unshippable";
 
-		else if (number == 5)
-			return "Rework";
-
-		else if (number == 6)
-			return "QC";
-		else if (number == 7)
-			return "Scrapped";
+        else if (number == 6)
+            return "Unshippable";
+        else if (number == 7)
+            return "Scrapped";
 
 		return "";
 	}
