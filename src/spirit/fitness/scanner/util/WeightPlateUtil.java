@@ -8,7 +8,7 @@ public class WeightPlateUtil {
 	private static final String WEIGHT_PLATE_90_150 = "990150";
 	
 	private static final String MA902 = "790274";
-	private static final String  MA906= "790675";
+	private static final String MA906= "790675";
 	
 	private static final String MA900 = "790072";
 	private static final String MA901 = "790172";
@@ -32,6 +32,11 @@ public class WeightPlateUtil {
 		if (item.equals(MA902) || item.equals(MA906) || item.equals(MA900)|| item.equals(MA901))
 			return true;
 		return false;
+	}
+	
+	public static boolean isCheckBoxNoSNitem(String item) 
+	{
+		return (isCalfSupport(item) || isWeightPlate(item));
 	}
 	
 	public static String modelAppendWithPart(String modelNo) 

@@ -14,11 +14,11 @@ public class PrintTableUtil {
 		
         Board board = new Board(100);
         Table table = new Table(board, 75, headersList, rowsList);
-        table.setGridMode(Table.GRID_COLUMN);
+        table.setGridMode(Table.GRID_NON);
  
         //setting width and data-align of columns
-        List<Integer> colWidthsList = Arrays.asList(14, 14, 50, 14);
-        List<Integer> colAlignList = Arrays.asList(Block.DATA_CENTER, Block.DATA_CENTER, Block.DATA_CENTER, Block.DATA_CENTER);
+        List<Integer> colWidthsList = Arrays.asList(5, 8, 40, 40);
+        List<Integer> colAlignList = Arrays.asList(Block.DATA_CENTER, Block.DATA_CENTER, Block.DATA_CENTER, Block.DATA_MIDDLE_LEFT);
         table.setColWidthsList(colWidthsList);
         table.setColAlignsList(colAlignList);
         
