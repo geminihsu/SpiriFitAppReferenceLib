@@ -19,6 +19,13 @@ public class WeightPlateUtil {
 	private static String FT7MODEL = "900FT7";
 	private static String DR7MODEL = "900DR7";
 
+	//For sales to check, they are not item
+	private static String LIFTGATE_REQUIRED = "10030";
+	private static String HOUR_REQUIRED = "10032";
+	private static String INSIDE_DELIVERY_REQUIRED = "10034";
+	private static String DELIVERY_REQUIRED_1 = "10049";
+	private static String DELIVERY_REQUIRED_2 = "10050";
+	
 	public static boolean isWeightPlate(String item) {
 		if (item.equals(WEIGHT_PLATE_170Cartons) || item.equals(WEIGHT_PLATE_20_80)
 				|| item.equals(WEIGHT_PLATE_200Cartons) || item.equals(WEIGHT_PLATE_90_150))
@@ -36,8 +43,9 @@ public class WeightPlateUtil {
 	
 	public static boolean isCheckBoxNoSNitem(String item) 
 	{
-		return (isCalfSupport(item) || isWeightPlate(item));
+		return (isCalfSupport(item) || isWeightPlate(item) || isShippingRequired(item));
 	}
+	
 	
 	public static String modelAppendWithPart(String modelNo) 
 	{
@@ -55,6 +63,14 @@ public class WeightPlateUtil {
 	public static boolean isModelParts(String modelNo) 
 	{
 		if(modelNo.equals(MS7MODEL) || modelNo.equals(LP7MODEL) || modelNo.equals(FT7MODEL)|| modelNo.equals(DR7MODEL))
+			return true;
+		return false;
+	}
+	
+	
+	public static boolean isShippingRequired(String required) 
+	{
+		if (required.equals(LIFTGATE_REQUIRED) || required.equals(HOUR_REQUIRED) || required.equals(INSIDE_DELIVERY_REQUIRED)|| required.equals(DELIVERY_REQUIRED_1)|| required.equals(DELIVERY_REQUIRED_2))
 			return true;
 		return false;
 	}
