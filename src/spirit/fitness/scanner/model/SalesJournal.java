@@ -16,7 +16,7 @@ public class SalesJournal {
     public String CustPo;
     public String ShipVia;
     public String DiscountAmount;
-    public String DistplayTerms;
+    public String DisplayTerms;
     public String SalesRepID;
     public String AcountReceivable;
     public String NotePrint;
@@ -45,7 +45,8 @@ public class SalesJournal {
     public String StatmentNote;
     public String StmtNote;
     public String InternalNote;
-    
+    public String TrackingNO;
+    public String SN;
     
     
     

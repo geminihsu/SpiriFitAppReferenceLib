@@ -19,8 +19,10 @@ public class Historybean {
     public Integer seq;
     @SerializedName("SN")
     public String SN;
-    @SerializedName("Date")
-    public String date;
+    @SerializedName("ShippedDate")
+    public String shippedDate;
+    @SerializedName("CreatedDate")
+    public String createdDate;
     @SerializedName("Location")
     public String location;
     @SerializedName("ModelNo")
