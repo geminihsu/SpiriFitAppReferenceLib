@@ -46,7 +46,7 @@ public class ExcelHelper {
         }
     }
 	
-	public static List<SalesJournal> readCSVFile() 
+	/*public static List<SalesJournal> readCSVFile() 
 	{
 		 String csvFile = System.getProperty("user.dir")+"\\SO_20180523.csv";
 
@@ -125,7 +125,7 @@ public class ExcelHelper {
 	            }
 	        }
          return result;
-	    }
+	    }*/
 	
   // public static void main(String[] args) {
 	   //ExcelHelper excelhelper = new ExcelHelper();
