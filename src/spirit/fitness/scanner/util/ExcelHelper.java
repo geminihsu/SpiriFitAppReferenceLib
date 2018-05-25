@@ -14,7 +14,7 @@ import javax.swing.table.*;
 
 import jxl.*;
 import jxl.write.*;
-import spirit.fitness.scanner.model.SalesJournal;
+//import spirit.fitness.scanner.model.SalesJournal;
 
 //Read more: http://niravjavadeveloper.blogspot.com/2011/05/java-swing-export-jtable-to-excel-file.html#ixzz54awwPWb4
 import javax.swing.JTable;
