@@ -9,7 +9,7 @@ public class CustOrderbean {
 	@SerializedName("Sales_Order")
 	public String salesOrder;
 	@SerializedName("Date")
-	public String createdDate;
+	public String shippingDate;
 	@SerializedName("Bill_to")
 	public String bill_to;
 	@SerializedName("Ship_to_Address_Line_One")
