@@ -60,7 +60,15 @@ public class FGRepositoryImplRetrofit {
 	 */
 
 	public List<Itembean> createItem(List<Itembean> items) throws Exception {
+		
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(1, TimeUnit.MINUTES)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(15, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		InventoryCallback service = retrofit.create(InventoryCallback.class);
 		
@@ -85,7 +93,15 @@ public class FGRepositoryImplRetrofit {
 	}
 
 	public List<Itembean> getReceiveItemBySNList(List<Itembean> items) throws Exception {
+		
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(1, TimeUnit.MINUTES)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(15, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		InventoryCallback service = retrofit.create(InventoryCallback.class);
 		
