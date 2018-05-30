@@ -3,7 +3,9 @@ package spirit.fitness.scanner.restful;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -25,7 +27,14 @@ public class ContainerRepositoryImplRetrofit {
 	}
 
 	public List<Containerbean> createItem(List<Containerbean> items) throws Exception {
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		ContainerCallback service = retrofit.create(ContainerCallback.class);
 		Response<List<Containerbean>> request = service.createItem(items).execute();
@@ -44,7 +53,14 @@ public class ContainerRepositoryImplRetrofit {
 	}
 
 	public List<Containerbean> getAllItems() throws Exception {
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		ContainerCallback service = retrofit.create(ContainerCallback.class);
 		Response<List<Containerbean>> request = service.getAllItems().execute();
@@ -56,7 +72,14 @@ public class ContainerRepositoryImplRetrofit {
 	}
 
 	public List<Containerbean> getItemsByDate(String date) throws Exception {
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		ContainerCallback service = retrofit.create(ContainerCallback.class);
 		Call<List<Containerbean>> items = service.getItemsByDate(date);
@@ -65,7 +88,14 @@ public class ContainerRepositoryImplRetrofit {
 	}
 
 	public List<Containerbean> getItemsByContainerNo(String containerNo) throws Exception {
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		ContainerCallback service = retrofit.create(ContainerCallback.class);
 
@@ -75,7 +105,14 @@ public class ContainerRepositoryImplRetrofit {
 	}
 
 	public List<Containerbean> updateItem(List<Containerbean> item) throws Exception {
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		ContainerCallback service = retrofit.create(ContainerCallback.class);
 
@@ -87,7 +124,14 @@ public class ContainerRepositoryImplRetrofit {
 	}
 
 	public void deleteItem(Integer Seq){
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		ContainerCallback service = retrofit.create(ContainerCallback.class);
 		
