@@ -54,7 +54,6 @@ public class HistoryRepositoryImplRetrofit {
 		        .readTimeout(300, TimeUnit.SECONDS)
 		        .writeTimeout(300, TimeUnit.SECONDS)
 		        .build();
-		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create())
@@ -76,7 +75,6 @@ public class HistoryRepositoryImplRetrofit {
 		        .readTimeout(300, TimeUnit.SECONDS)
 		        .writeTimeout(300, TimeUnit.SECONDS)
 		        .build();
-		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create())
@@ -92,7 +90,6 @@ public class HistoryRepositoryImplRetrofit {
 		        .readTimeout(300, TimeUnit.SECONDS)
 		        .writeTimeout(300, TimeUnit.SECONDS)
 		        .build();
-		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create())
@@ -109,7 +106,6 @@ public class HistoryRepositoryImplRetrofit {
 		        .readTimeout(300, TimeUnit.SECONDS)
 		        .writeTimeout(300, TimeUnit.SECONDS)
 		        .build();
-		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create())
@@ -129,7 +125,6 @@ public class HistoryRepositoryImplRetrofit {
 		        .readTimeout(300, TimeUnit.SECONDS)
 		        .writeTimeout(300, TimeUnit.SECONDS)
 		        .build();
-		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create())

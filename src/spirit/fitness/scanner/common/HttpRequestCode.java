@@ -6,5 +6,4 @@ public class HttpRequestCode {
     public static int HTTP_REQUEST_ACCEPTED = 202;
     public static int HTTP_REQUEST_INSERT_DATABASE_ERROR = 403;
     public static int HTTP_REQUEST_SN_CONFLICT_ERROR = 409;
-
 }

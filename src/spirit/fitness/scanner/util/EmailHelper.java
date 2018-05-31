@@ -1,7 +1,5 @@
 package spirit.fitness.scanner.util;
 
-
-
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,9 +15,6 @@ import spirit.fitness.scanner.model.Containerbean;
 
 import java.util.Properties;
 
-
-
-
 public class EmailHelper {
 	private final static String CONTAINER_NO = "Container# ";
 	private final static String RECEIVED_DATE = "Received Date : ";
@@ -29,7 +24,6 @@ public class EmailHelper {
 	private final static String SERIAL_START = "Serial No. Begin : ";
 	private final static String SERIAL_END = "Serial No. End : ";
 	private final static String QTY = "Quantity : ";
-	
 
 	public static void sendMail(String scanDate, List<Containerbean> containInfo, String items,String email) {
 
@@ -65,21 +59,27 @@ public class EmailHelper {
 			int startIndex = 0;
 			for (Containerbean container : containInfo) {
 				String itemsArray = "";
-				String containInfoTxt =  CONTAINER_NO + container.ContainerNo + "<br>" + SCANNED_DATE + scanDate + "<br>"
+				String containInfoTxt =  CONTAINER_NO + container.ContainerNo + "<br>" + RECEIVED_DATE + containInfo.get(0).date + "<br>" + SCANNED_DATE + scanDate + "<br>"
 						+ MODEL_NO + container.SNEnd.substring(0, 6) + "<br>" + MODEL_DESC + Constrant.models.get(container.SNEnd.substring(0, 6)).Desc + "<br>"
 						+ SERIAL_START + container.SNBegin + "<br>" + SERIAL_END + container.SNEnd + "<br>" + QTY
 						+ String.valueOf(Integer.valueOf(container.SNEnd.substring(10, 16))
 								- Integer.valueOf(container.SNBegin.substring(10, 16)) + 1)
 						+ "<br>";
 
-				int qty = Integer.valueOf(container.SNEnd.substring(10, 16))- Integer.valueOf(container.SNBegin.substring(10, 16)) + 1;
+				int startIdx = Integer.valueOf(container.SNBegin.substring(10, 16)) ;
+				int endIdx = Integer.valueOf(container.SNEnd.substring(10, 16)) ;
+				
+				int qty = endIdx - startIdx+ 1;
 				String[] scanSN = new String[qty];
 				System.arraycopy( scanitems, startIndex, scanSN, 0, qty );
 				startIndex= startIndex + qty;
 				
 				for(String s : scanSN) 
 				{
-					itemsArray += s+"<br>";
+					if(Integer.valueOf(s.substring(10,16)) - startIdx < 0 || endIdx - Integer.valueOf(s.substring(10,16)) <0)
+						itemsArray += "<font color=\"red\">"+s + "</font>"+"<br>";
+					else
+						itemsArray += s+"<br>";
 				}
 				containInfoTxt += "------------------------------------------------------------<br>" + "Scanned SN : <br>"+"------------------------------------------------------------<br>" + itemsArray;
 
@@ -97,5 +97,5 @@ public class EmailHelper {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 }
