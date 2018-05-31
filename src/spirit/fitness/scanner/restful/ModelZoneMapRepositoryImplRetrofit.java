@@ -36,7 +36,8 @@ public class ModelZoneMapRepositoryImplRetrofit {
 	}
 
 	public List<ModelZone2bean> getAllItems() throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 		ModelZoneMapCallback service = retrofit.create(ModelZoneMapCallback.class);
 		
