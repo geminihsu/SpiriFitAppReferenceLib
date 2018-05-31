@@ -50,9 +50,9 @@ public class HistoryRepositoryImplRetrofit {
 	
 	public List<Historybean> createItem(List<Historybean> items) throws Exception {
 		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
-		        .connectTimeout(1, TimeUnit.MINUTES)
-		        .readTimeout(30, TimeUnit.SECONDS)
-		        .writeTimeout(15, TimeUnit.SECONDS)
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
 		        .build();
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.client(okHttpClient)
@@ -70,7 +70,14 @@ public class HistoryRepositoryImplRetrofit {
 	
 	
 	public List<Historybean> getAllItems() throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 		Call<List<Historybean>> items = service.getAllItems();
@@ -78,7 +85,14 @@ public class HistoryRepositoryImplRetrofit {
 	}
 	
 	public List<Historybean> getItemsByDate(String date) throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 		Call<List<Historybean>> items = service.getItemsByDate(date);
@@ -87,7 +101,14 @@ public class HistoryRepositoryImplRetrofit {
 	}
 	
 	public List<Historybean> getItemsByModel(Integer modelNo) throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 		Response<List<Historybean>> request = service.getItemsByModelNo(modelNo).execute();
@@ -99,7 +120,14 @@ public class HistoryRepositoryImplRetrofit {
 	}
 	
 	public List<Historybean> getItemsBySalesOrder(String salesOrder) throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(300, TimeUnit.SECONDS)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(300, TimeUnit.SECONDS)
+		        .build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create())
 				.build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 

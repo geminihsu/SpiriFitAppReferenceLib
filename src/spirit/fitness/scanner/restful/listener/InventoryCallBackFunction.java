@@ -13,4 +13,5 @@ public interface InventoryCallBackFunction {
 	public void checkMoveItems(List<Itembean> items);
 	public void checkReceiveItem(List<Itembean> items);
 	public void checkInventoryZone2Items(int resultCode,List<Itembean> items);
+	public void exception(String error);
 }
