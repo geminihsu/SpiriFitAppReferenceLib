@@ -103,5 +103,7 @@ public class Constrant {
     public static final int STOCKING_UNIT_PRICE = 40;
     public static final int AMOUNT = 41;
     public static final int PROPOSAL_ACCEPTED = 42;
+    
+    public static String serial_list = "";
   
 }
