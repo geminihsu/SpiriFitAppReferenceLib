@@ -128,7 +128,7 @@ public class FGRepositoryImplRetrofit {
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.checkReceiveItem(result);
 		} catch (Exception e) {
-			NetWorkHandler.getInstance();
+			
 			// JOptionPane.showMessageDialog(null, "Please check network configuration.");
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.exception(e.toString());

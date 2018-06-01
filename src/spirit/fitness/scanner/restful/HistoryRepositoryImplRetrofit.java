@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JOptionPane;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -51,9 +53,12 @@ public class HistoryRepositoryImplRetrofit {
 	 */
 
 	public List<Historybean> createItem(List<Historybean> items) {
-		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
-				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()
+				.connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS)
+				.writeTimeout(300, TimeUnit.SECONDS).build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 		List<Historybean> result = null;
@@ -64,7 +69,7 @@ public class HistoryRepositoryImplRetrofit {
 			result = retriveCode(code, request);
 		} catch (Exception e) {
 			NetWorkHandler.getInstance();
-			// JOptionPane.showMessageDialog(null, "Please check network configuration.");
+		    //JOptionPane.showMessageDialog(null, "Please check network configuration.");
 			if (historyServiceCallBackFunction != null)
 				historyServiceCallBackFunction.exception(e.toString());
 		}
