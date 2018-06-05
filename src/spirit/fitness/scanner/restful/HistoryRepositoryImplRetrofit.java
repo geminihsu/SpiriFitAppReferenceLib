@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JOptionPane;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -18,12 +20,10 @@ import spirit.fitness.scanner.restful.callback.HistoryCallback;
 import spirit.fitness.scanner.restful.callback.InventoryCallback;
 import spirit.fitness.scanner.restful.listener.HistoryCallBackFunction;
 import spirit.fitness.scanner.restful.listener.InventoryCallBackFunction;
-
-
+import spirit.fitness.scanner.util.NetWorkHandler;
 
 public class HistoryRepositoryImplRetrofit {
 
-	
 	// retrieve return code number
 	private HistoryCallBackFunction historyServiceCallBackFunction;
 
@@ -31,170 +31,151 @@ public class HistoryRepositoryImplRetrofit {
 		historyServiceCallBackFunction = _historyServiceCallBackFunction;
 
 	}
-	/*public Shippingbean updateItem(Shippingbean item) throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
-				.build();
-		SpiritfitResource service = retrofit.create(SpiritfitResource.class);
+	/*
+	 * public Shippingbean updateItem(Shippingbean item) throws Exception { Retrofit
+	 * retrofit = new
+	 * Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(
+	 * GsonConverterFactory.create()) .build(); SpiritfitResource service =
+	 * retrofit.create(SpiritfitResource.class);
+	 * 
+	 * return service.updateItem(item.seq, item).execute().body(); }
+	 */
 
-		return service.updateItem(item.seq, item).execute().body();
-	}*/
-	
-	
-	/*public Shippingbean createItem(Shippingbean item) throws Exception {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
-				.build();
-		SpiritfitResource service = retrofit.create(SpiritfitResource.class);
-		return service.createItem(item).execute().body();
+	/*
+	 * public Shippingbean createItem(Shippingbean item) throws Exception { Retrofit
+	 * retrofit = new
+	 * Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(
+	 * GsonConverterFactory.create()) .build(); SpiritfitResource service =
+	 * retrofit.create(SpiritfitResource.class); return
+	 * service.createItem(item).execute().body();
+	 * 
+	 * }
+	 */
 
-	}*/
-	
-	public List<Historybean> createItem(List<Historybean> items) throws Exception {
-		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
-		        .connectTimeout(300, TimeUnit.SECONDS)
-		        .readTimeout(300, TimeUnit.SECONDS)
-		        .writeTimeout(300, TimeUnit.SECONDS)
-		        .build();
+	public List<Historybean> createItem(List<Historybean> items) {
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()
+				.connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS)
+				.writeTimeout(300, TimeUnit.SECONDS).build();
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
 				.client(okHttpClient)
-				.addConverterFactory(GsonConverterFactory.create())
-				.build();
+				.addConverterFactory(GsonConverterFactory.create()).build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
-		Response<List<Historybean>> request = service.createItem(items).execute();
-		int code = request.code();
-		
-		List<Historybean> result = retriveCode(code,request);
-		
+		List<Historybean> result = null;
+		try {
+			Response<List<Historybean>> request = service.createItem(items).execute();
+			int code = request.code();
+
+			result = retriveCode(code, request);
+		} catch (Exception e) {
+			NetWorkHandler.getInstance();
+		    //JOptionPane.showMessageDialog(null, "Please check network configuration.");
+			if (historyServiceCallBackFunction != null)
+				historyServiceCallBackFunction.exception(e.toString());
+		}
 		return result;
 
 	}
-	
-	
+
 	public List<Historybean> getAllItems() throws Exception {
-		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
-		        .connectTimeout(300, TimeUnit.SECONDS)
-		        .readTimeout(300, TimeUnit.SECONDS)
-		        .writeTimeout(300, TimeUnit.SECONDS)
-		        .build();
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
-				.client(okHttpClient)
-				.addConverterFactory(GsonConverterFactory.create())
-				.build();
+		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create()).build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 		Call<List<Historybean>> items = service.getAllItems();
 		return items.execute().body();
 	}
-	
+
 	public List<Historybean> getItemsByDate(String date) throws Exception {
-		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
-		        .connectTimeout(300, TimeUnit.SECONDS)
-		        .readTimeout(300, TimeUnit.SECONDS)
-		        .writeTimeout(300, TimeUnit.SECONDS)
-		        .build();
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
-				.client(okHttpClient)
-				.addConverterFactory(GsonConverterFactory.create())
-				.build();
+		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create()).build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 		Call<List<Historybean>> items = service.getItemsByDate(date);
-		//System.out.println(items.execute().toString());
+		// System.out.println(items.execute().toString());
 		return items.execute().body();
 	}
-	
+
 	public List<Historybean> getItemsByModel(Integer modelNo) throws Exception {
-		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
-		        .connectTimeout(300, TimeUnit.SECONDS)
-		        .readTimeout(300, TimeUnit.SECONDS)
-		        .writeTimeout(300, TimeUnit.SECONDS)
-		        .build();
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
-				.client(okHttpClient)
-				.addConverterFactory(GsonConverterFactory.create())
-				.build();
+		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create()).build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 		Response<List<Historybean>> request = service.getItemsByModelNo(modelNo).execute();
 		int code = request.code();
-		
-		List<Historybean> result = retriveCode(code,request);
-		
+
+		List<Historybean> result = retriveCode(code, request);
+
 		return result;
 	}
-	
+
 	public List<Historybean> getItemsBySalesOrder(String salesOrder) throws Exception {
-		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
-		        .connectTimeout(300, TimeUnit.SECONDS)
-		        .readTimeout(300, TimeUnit.SECONDS)
-		        .writeTimeout(300, TimeUnit.SECONDS)
-		        .build();
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
-				.client(okHttpClient)
-				.addConverterFactory(GsonConverterFactory.create())
-				.build();
+		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create()).build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 
 		Response<List<Historybean>> request = service.getItemsBySalesOrder(salesOrder).execute();
 		int code = request.code();
-		
+
 		List<Historybean> resultData = null;
-		
-		if(code == HttpRequestCode.HTTP_REQUEST_OK)
+
+		if (code == HttpRequestCode.HTTP_REQUEST_OK)
 			resultData = request.body();
-		
-		if (historyServiceCallBackFunction != null) 
+
+		if (historyServiceCallBackFunction != null)
 			historyServiceCallBackFunction.checkHistoryItemsBySalesOrder(resultData);
-		
+
 		return resultData;
 	}
 
-	/*public static void main(String[] args) throws Exception {
-		HistoryRepositoryImplRetrofit fgRepository = new HistoryRepositoryImplRetrofit();
-		
-	    List<Shippingbean> items = new ArrayList<>();
-		
-		
-		for(int i = 1; i < 9; i++) 
-		{
-			Shippingbean item1 = new Shippingbean();
-			
-			
-			item1.seq = i;
-			item1.SN = "158012130800080"+String.valueOf(i);
-			item1.date = "2017-12-13 16:14:02.343";
-			item1.Location = "060";
-			item1.ModelNo = "158012";
-			items.add(item1);
-		}
-		
-		/*Shippingbean item = new Shippingbean();
-		
-		
-		item.seq = 1;
-		item.SN = "158012130800080"+String.valueOf(2);
-		item.date = "2017-12-13 16:14:02.343";
-		item.Location = "111";
-		item.ModelNo = "158012";
-		items.add(item);*/
-	//	Historybean fg = fgRepository.getAllItems().get(0);
-		//Shippingbean fg = fgRepository.getItemsByModel(Integer.valueOf("158012")).get(0);
-		
-		//Shippingbean fg = fgRepository.getItemsByLocation(Integer.valueOf("025")).get(0);
-		//String fg = fgRepository.createItem(items).get(0).SN;
-		//Shippingbean fg = fgRepository.updateItem(item);
-		
-		//fgRepository.deleteItem(7);
-	//	System.out.println(fg);
-		
-		
-		// bookRepository.deleteBook(book.getId());
-	//}
+	/*
+	 * public static void main(String[] args) throws Exception {
+	 * HistoryRepositoryImplRetrofit fgRepository = new
+	 * HistoryRepositoryImplRetrofit();
+	 * 
+	 * List<Shippingbean> items = new ArrayList<>();
+	 * 
+	 * 
+	 * for(int i = 1; i < 9; i++) { Shippingbean item1 = new Shippingbean();
+	 * 
+	 * 
+	 * item1.seq = i; item1.SN = "158012130800080"+String.valueOf(i); item1.date =
+	 * "2017-12-13 16:14:02.343"; item1.Location = "060"; item1.ModelNo = "158012";
+	 * items.add(item1); }
+	 * 
+	 * /*Shippingbean item = new Shippingbean();
+	 * 
+	 * 
+	 * item.seq = 1; item.SN = "158012130800080"+String.valueOf(2); item.date =
+	 * "2017-12-13 16:14:02.343"; item.Location = "111"; item.ModelNo = "158012";
+	 * items.add(item);
+	 */
+	// Historybean fg = fgRepository.getAllItems().get(0);
+	// Shippingbean fg =
+	// fgRepository.getItemsByModel(Integer.valueOf("158012")).get(0);
+
+	// Shippingbean fg =
+	// fgRepository.getItemsByLocation(Integer.valueOf("025")).get(0);
+	// String fg = fgRepository.createItem(items).get(0).SN;
+	// Shippingbean fg = fgRepository.updateItem(item);
+
+	// fgRepository.deleteItem(7);
+	// System.out.println(fg);
+
+	// bookRepository.deleteBook(book.getId());
+	// }
 
 	public void deleteItem(Integer seq) {
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).addConverterFactory(GsonConverterFactory.create())
-				.build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.addConverterFactory(GsonConverterFactory.create()).build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
 		service.deleteItem(seq);
 	}
-
-	
 
 	private List<Historybean> retriveCode(int code, Response<List<Historybean>> request) {
 		List<Historybean> resultData = null;

@@ -67,10 +67,13 @@ public class FGRepositoryImplRetrofit {
 	 */
 
 	public List<Itembean> createItem(List<Itembean> items) {
-		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
-				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()
+				.connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS)
+				.writeTimeout(300, TimeUnit.SECONDS).build();
 
-		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
 
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		InventoryCallback service = retrofit.create(InventoryCallback.class);
@@ -125,7 +128,7 @@ public class FGRepositoryImplRetrofit {
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.checkReceiveItem(result);
 		} catch (Exception e) {
-			NetWorkHandler.getInstance();
+			
 			// JOptionPane.showMessageDialog(null, "Please check network configuration.");
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.exception(e.toString());
