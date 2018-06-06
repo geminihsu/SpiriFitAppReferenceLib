@@ -13,6 +13,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import spirit.fitness.scanner.model.DailyShippingReportbean;
 import spirit.fitness.scanner.model.Historybean;
 import spirit.fitness.scanner.model.Itembean;
 /**
@@ -35,6 +36,8 @@ public interface HistoryCallback {
 	//Post one item
 	/*@POST("/api/FGInventory")
 	Call<Itembean> createItem(@Body Itembean itembean);*/
+	@GET("api/Histories/dailyship/{date}")
+	Call<List<DailyShippingReportbean>> getDailyReportItems(@Path("date") String location);
 	
 	//Post ArrayList items
 	@POST("api/Histories")

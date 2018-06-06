@@ -14,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import spirit.fitness.scanner.common.Constrant;
 import spirit.fitness.scanner.common.HttpRequestCode;
+import spirit.fitness.scanner.model.DailyShippingReportbean;
 import spirit.fitness.scanner.model.Historybean;
 import spirit.fitness.scanner.model.Itembean;
 import spirit.fitness.scanner.restful.callback.HistoryCallback;
@@ -86,6 +87,7 @@ public class HistoryRepositoryImplRetrofit {
 		Call<List<Historybean>> items = service.getAllItems();
 		return items.execute().body();
 	}
+	
 
 	public List<Historybean> getItemsByDate(String date) throws Exception {
 		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
@@ -132,7 +134,15 @@ public class HistoryRepositoryImplRetrofit {
 
 		return resultData;
 	}
-
+	public List<DailyShippingReportbean> getDailyShippingItems(String date) throws Exception {
+		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create()).build();
+		HistoryCallback service = retrofit.create(HistoryCallback.class);
+		Call<List<DailyShippingReportbean>> items = service.getDailyReportItems(date);
+		return items.execute().body();
+	}
 	/*
 	 * public static void main(String[] args) throws Exception {
 	 * HistoryRepositoryImplRetrofit fgRepository = new
