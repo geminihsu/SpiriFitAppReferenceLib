@@ -44,7 +44,7 @@ public class PrintPreview extends JScrollPane{
 
 	public PrintPreview(Pageable pg) {
 		this.mPageable = pg;
-		createPreview();
+		//createPreview();
 	}
 
 	public PrintPreview(final Printable pr, final PageFormat p) {
@@ -71,7 +71,7 @@ public class PrintPreview extends JScrollPane{
 				return pr;
 			}
 		};
-		createPreview();
+		//createPreview();
 	}
 
 	private void createPreview() {
