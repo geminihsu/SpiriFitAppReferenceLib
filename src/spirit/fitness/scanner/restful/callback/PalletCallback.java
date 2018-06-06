@@ -16,27 +16,27 @@ import spirit.fitness.scanner.model.Palletbean;
 public interface PalletCallback {
 	@Headers("Content-Type: application/json")
 	
-	@GET("FGService/api/Pallets")
+	@GET("api/Pallets")
 	Call<List<Palletbean>> getAllItems();
 	
-	@GET("FGService/api/Pallets/date/{salesOrder}")
+	@GET("api/Pallets/date/{salesOrder}")
 	Call<List<Palletbean>> getItemsBySalesOrder(@Path("salesOrder") String salesOrder);
 	
 	
-	@GET("FGService/api/Pallets/date/{date}")
+	@GET("api/Pallets/date/{date}")
 	Call<List<Palletbean>> getItemsByDate(@Path("date") String date);
 	
 	
 	//Post ArrayList items
-	@POST("FGService/api/Pallets")
+	@POST("api/Pallets")
 	Call<List<Palletbean>> createItem(@Body List<Palletbean> itembean);
 
 	
 	//PUT more than one item
-    @PUT("FGService/api/Pallets")
+    @PUT("api/Pallets")
 	Call<List<Palletbean>> updateItem(@Body List<Palletbean> itembean);
 
 	//Delete no work
-	@DELETE("FGService/api/Pallets/{Seq}")
+	@DELETE("api/Pallets/{Seq}")
 	Call<Palletbean> deleteItem(@Path("Seq") Integer Seq);
 }

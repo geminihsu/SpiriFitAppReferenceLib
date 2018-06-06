@@ -23,5 +23,7 @@ public class Palletbean {
 	 public String shippedDate;
 	 @SerializedName("CreatedDate")
 	 public String createdDate;
+	 @SerializedName("Qty")
+	 public String qty;
 
 }
