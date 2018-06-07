@@ -7,6 +7,8 @@ public class Palletbean {
 	 public Integer seq;
 	 @SerializedName("ItemID")
 	 public String itemID;
+	 @SerializedName("FG")
+	 public String description;
 	 @SerializedName("SalesOrder")
 	 public String salesOrder;
 	 @SerializedName("TrackingNo")

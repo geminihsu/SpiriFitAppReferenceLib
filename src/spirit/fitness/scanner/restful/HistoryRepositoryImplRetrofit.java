@@ -140,8 +140,20 @@ public class HistoryRepositoryImplRetrofit {
 		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		HistoryCallback service = retrofit.create(HistoryCallback.class);
-		Call<List<DailyShippingReportbean>> items = service.getDailyReportItems(date);
-		return items.execute().body();
+		
+		Response<List<DailyShippingReportbean>> request = service.getDailyReportItems(date).execute();
+		int code = request.code();
+
+		List<DailyShippingReportbean> resultData = null;
+
+		if (code == HttpRequestCode.HTTP_REQUEST_OK)
+			resultData = request.body();
+
+		if (historyServiceCallBackFunction != null)
+			historyServiceCallBackFunction.getDailyShippingItems(resultData);
+	
+		
+		return resultData;
 	}
 	/*
 	 * public static void main(String[] args) throws Exception {

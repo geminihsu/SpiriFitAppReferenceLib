@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ import javax.swing.table.*;
 import jxl.*;
 import jxl.write.*;
 import spirit.fitness.scanner.common.Constrant;
+import spirit.fitness.scanner.model.DailyShippingReportbean;
 import spirit.fitness.scanner.model.SalesJournal;
 
 //Read more: http://niravjavadeveloper.blogspot.com/2011/05/java-swing-export-jtable-to-excel-file.html#ixzz54awwPWb4
@@ -57,10 +59,41 @@ public class ExcelHelper {
         }
     }
 	
-	public static List<SalesJournal> readCSVFile() 
-	{
-		 String csvFile = System.getProperty("user.dir")+"\\SO_20180523.csv";
+	public void fillDailyShippingData(JTable table, File file) {
 
+        try {
+
+            WritableWorkbook workbook1 = Workbook.createWorkbook(file);
+            WritableSheet sheet1 = workbook1.createSheet("First Sheet", 0); 
+            WritableCellFormat cellFormat = new WritableCellFormat();
+            cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+
+            TableModel model = table.getModel();
+
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                Label column = new Label(i, 0, model.getColumnName(i));
+                column.setCellFormat(cellFormat);
+                sheet1.addCell(column);
+            }
+            int j = 0;
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (j = 0; j < model.getColumnCount(); j++) {
+                    Label row = new Label(j, i + 1, model.getValueAt(i, j).toString());
+                    row.setCellFormat(cellFormat);
+                    sheet1.addCell(row);
+                }
+            }
+            workbook1.write();
+            workbook1.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+	
+	public static List<SalesJournal> readCSVFile(String path, LinkedHashMap<String, DailyShippingReportbean> soMap) 
+	{
+		   // String csvFile = System.getProperty("user.dir")+"\\SO_20180523.csv";
+		    String csvFile = path +"\\SO.csv";
 	        BufferedReader br = null;
 	        String line = "";
 	        String cvsSplitBy = ",";
@@ -69,10 +102,13 @@ public class ExcelHelper {
 
 	            br = new BufferedReader(new FileReader(csvFile));
 	            while ((line = br.readLine()) != null) {
-
+	            	
 	                // use comma as separator
 	                String[] country = line.split(cvsSplitBy);
 
+	                if(country[Constrant.ITEMID].startsWith("T0") || soMap.get(country[Constrant.SO]) == null)
+	                	continue;
+	                	
 	                SalesJournal salesJournal = new SalesJournal();
 	                salesJournal.CustomerID = country[Constrant.CUSTOMERID];
 	                salesJournal.SO = country[Constrant.SO];
@@ -98,7 +134,7 @@ public class ExcelHelper {
 	                salesJournal.Quantity = country[Constrant.QTY];
 	                salesJournal.ItemID = country[Constrant.ITEMID];
 	                salesJournal.Description = country[Constrant.DESCRIPTION];
-	                salesJournal.GL_Account = country[Constrant.GL_ACCOUNT];
+	              /*  salesJournal.GL_Account = country[Constrant.GL_ACCOUNT];
 	                salesJournal.UnitPrice = country[Constrant.UNIT_PRICE];
 	                salesJournal.TaxType = country[Constrant.TAX_TYPE];
 	                salesJournal.UPC_SKU = country[Constrant.UPC_SKU];
@@ -108,14 +144,14 @@ public class ExcelHelper {
 	                salesJournal.StockingUnitPrice = country[Constrant.STOCKING_UNIT_PRICE];
 	                salesJournal.Amount = country[Constrant.AMOUNT];
 	                salesJournal.ProposalAccepted = country[Constrant.PROPOSAL_ACCEPTED];
-	              
+	              */
 	                int qty = 0;
 	                
 	                if(salesJournal.Quantity.indexOf(".") != -1)
 	                	qty =	Integer.valueOf(salesJournal.Quantity.substring(0,salesJournal.Quantity.indexOf(".")));
 	                while(qty > 0) {
 	                result.add(salesJournal);
-	                System.out.println("Sales [order = " + salesJournal.SO + " , itemID=" + salesJournal.ItemID + "]"+ " , Qty=" + salesJournal.Quantity + "]");
+	                System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID + "]"+ " , [Des=" + salesJournal.Description + "]"+" , [Qty=" + salesJournal.Quantity + "]");
 
 	                qty --;
 	                }
