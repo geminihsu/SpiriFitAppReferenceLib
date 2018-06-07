@@ -90,9 +90,9 @@ public class Constrant {
     public static final int NOTE_PRINT = 27;
     public static final int NUMBEROFDISTRIBUTION = 28;
     public static final int SODISTRIBUTION = 29;
-    public static final int QTY = 21;
-    public static final int ITEMID = 22;
-    public static final int DESCRIPTION = 23;
+    public static final int QTY = 30;
+    public static final int ITEMID = 31;
+    public static final int DESCRIPTION = 32;
     public static final int GL_ACCOUNT = 33;
     public static final int UNIT_PRICE = 34;
     public static final int TAX_TYPE = 35;

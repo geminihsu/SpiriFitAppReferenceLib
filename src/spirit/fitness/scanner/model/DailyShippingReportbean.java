@@ -29,6 +29,6 @@ public class DailyShippingReportbean{
 	public String shippingDate;
 	
 	@SerializedName("SN")
-	public List<String> sn;
+	public String sn;
 	
 }
