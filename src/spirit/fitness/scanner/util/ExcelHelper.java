@@ -199,7 +199,15 @@ public class ExcelHelper {
 							
 							Calendar c = Calendar.getInstance();
 						    c.setTime(date);
-						    c.add(Calendar.DATE, 31);
+						    
+						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
+						    	c.add(Calendar.DATE, 31);
+						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
+						    	c.add(Calendar.DATE, 46);
+						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
+						    	c.add(Calendar.DATE, 91);
+						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
+						    	c.add(Calendar.DATE, 0);
 
 							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
 
