@@ -201,11 +201,11 @@ public class ExcelHelper {
 						    c.setTime(date);
 						    
 						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
-						    	c.add(Calendar.DATE, 31);
+						    	c.add(Calendar.DATE, 30);
 						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
-						    	c.add(Calendar.DATE, 46);
+						    	c.add(Calendar.DATE, 45);
 						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
-						    	c.add(Calendar.DATE, 91);
+						    	c.add(Calendar.DATE, 90);
 						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
 						    	c.add(Calendar.DATE, 0);
 
@@ -248,7 +248,7 @@ public class ExcelHelper {
 
 	public static boolean writeToCVS(String path,List<SalesJournal> salesOrder) {
 		FileWriter fileWriter = null;
-		String csvFile = path + "\\SALES.csv";
+		String csvFile = path + "\\SALES.CSV";
 
 		try {
 			fileWriter = new FileWriter(csvFile);
