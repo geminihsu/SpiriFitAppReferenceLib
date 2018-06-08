@@ -68,24 +68,29 @@ public class Constrant {
     public static Color BUTTON_BACKGROUN_COLOR = new java.awt.Color(255, 255, 240);
     
      
-    //SalesJournal attributes index
+  //SalesJournal attributes index
     public static final int CUSTOMERID = 0;
     public static final int SO = 1;
     public static final int DATE = 2;
     public static final int SHIPBY = 3; 
+    public static final int SHIPBYFALSE = 4; 
     public static final int DROPSHIP = 5;
     public static final int SHIPTONAME = 6;
     public static final int SHIPTOADDRESS1 = 7;
     public static final int SHIPTOADDRESS2 = 8;
     public static final int SHIPTOCITY = 9;
     public static final int SHIPTOSTATE = 10;
+    public static final int SHIPTOPHONE = 11;
     public static final int SHIPTOZIPCODE = 12;
+    public static final int SHIPTOZCODECOUNTRY = 13;
     public static final int SHIPTOZIPCOUNTRY = 14;
     public static final int CUSTPO = 15;
-    public static final int SHIPVIA = 16;
-    public static final int DISCOUNT_AMOUNT = 17;
-    public static final int DISPLAY_TERMS = 18;
-    public static final int SALES_REPID = 25;
+    public static final int ACCOUNT_RECE_ID = 16;
+    public static final int SHIPVIA = 17;
+    public static final int DISCOUNT_AMOUNT = 18;
+    public static final int DISPLAY_TERMS = 19;
+    public static final int DISPLAY_TYPE = 20;
+    public static final int SALES_REPID = 21;
     public static final int ACCOUNT_RECEIVABLE = 26;
     public static final int NOTE_PRINT = 27;
     public static final int NUMBEROFDISTRIBUTION = 28;
@@ -103,6 +108,7 @@ public class Constrant {
     public static final int STOCKING_UNIT_PRICE = 40;
     public static final int AMOUNT = 41;
     public static final int PROPOSAL_ACCEPTED = 42;
+    
     
     public static String serial_list = "";
   
