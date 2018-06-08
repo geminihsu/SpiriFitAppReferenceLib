@@ -13,7 +13,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import spirit.fitness.scanner.model.DailyShippingReportbean;
 import spirit.fitness.scanner.model.Historybean;
 import spirit.fitness.scanner.model.Itembean;
 /**
@@ -23,24 +22,22 @@ import spirit.fitness.scanner.model.Itembean;
 public interface HistoryCallback {
     
 	@Headers("Content-Type: application/json")
-	@GET("api/Histories")
+	@GET("FGService/api/Histories")
 	Call<List<Historybean>> getAllItems();
 
-	@GET("api/Histories/date/{date}")
+	@GET("FGService/api/Histories/date/{date}")
 	Call<List<Historybean>> getItemsByDate(@Path("date") String location);
 	
-	@GET("api/Histories/model/{modelNo}")
+	@GET("FGService/api/Histories/model/{modelNo}")
 	Call<List<Historybean>> getItemsByModelNo(@Path("modelNo") Integer modelNo);
-	@GET("api/Histories/salesOrder/{salesOrder}")
+	@GET("FGService/api/Histories/salesOrder/{salesOrder}")
 	Call<List<Historybean>> getItemsBySalesOrder(@Path("salesOrder") String modelNo);
 	//Post one item
 	/*@POST("/api/FGInventory")
 	Call<Itembean> createItem(@Body Itembean itembean);*/
-	@GET("api/Histories/dailyship/{date}")
-	Call<List<DailyShippingReportbean>> getDailyReportItems(@Path("date") String location);
 	
 	//Post ArrayList items
-	@POST("api/Histories")
+	@POST("FGService/api/Histories")
 	Call<List<Historybean>> createItem(@Body List<Historybean> itembean);
 
 	/*//PUT one item
@@ -49,11 +46,11 @@ public interface HistoryCallback {
 
 	
 	//PUT more than one item
-	@PUT("api/Histories")
+	@PUT("FGService/api/Histories")
 	Call<List<Historybean>> updateItem(@Body List<Historybean> itembean);
 
 	//Delete no work
-	@DELETE("api/Histories/{seq}")
+	@DELETE("FGService/api/Histories/{seq}")
 	Call<Historybean> deleteItem(@Path("seq") Integer seq);
 
 }
