@@ -238,7 +238,7 @@ public class ExcelHelper {
 		return result;
 	}
 
-	public static void writeToCVS(String path,List<SalesJournal> salesOrder) {
+	public static boolean writeToCVS(String path,List<SalesJournal> salesOrder) {
 		FileWriter fileWriter = null;
 		String csvFile = path + "\\SALES.csv";
 
@@ -385,10 +385,11 @@ public class ExcelHelper {
 			}
 
 			System.out.println("CSV file was created successfully !!!");
-
+            return true;
 		} catch (Exception e) {
 			System.out.println("Error in CsvFileWriter !!!");
 			e.printStackTrace();
+			return false;
 		} finally {
 
 			try {
@@ -397,6 +398,7 @@ public class ExcelHelper {
 			} catch (IOException e) {
 				System.out.println("Error while flushing/closing fileWriter !!!");
 				e.printStackTrace();
+				return false;
 			}
 
 		}
