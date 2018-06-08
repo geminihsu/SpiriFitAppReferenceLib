@@ -73,6 +73,7 @@ public class Constrant {
     public static final int SO = 1;
     public static final int DATE = 2;
     public static final int SHIPBY = 3; 
+    public static final int SHIPBYFALSE = 4; 
     public static final int DROPSHIP = 5;
     public static final int SHIPTONAME = 6;
     public static final int SHIPTOADDRESS1 = 7;

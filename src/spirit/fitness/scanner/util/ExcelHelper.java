@@ -8,7 +8,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -98,6 +104,8 @@ public class ExcelHelper {
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
+		int soIndex = 1;
+		HashMap<String, Integer> soCntmap = new HashMap<String, Integer>();
 		List<SalesJournal> result = new ArrayList<SalesJournal>();
 		try {
 
@@ -110,11 +118,17 @@ public class ExcelHelper {
 				if (country[Constrant.ITEMID].startsWith("T0") || soMap.get(country[Constrant.SO]) == null)
 					continue;
 
+				if(soCntmap.get(country[Constrant.SO]) == null){
+					
+					soCntmap.put(country[Constrant.SO], soIndex);
+					soIndex++;
+				}
 				SalesJournal salesJournal = new SalesJournal();
 				salesJournal.CustomerID = country[Constrant.CUSTOMERID];
 				salesJournal.SO = country[Constrant.SO];
 				salesJournal.Date = country[Constrant.DATE];
 				salesJournal.ShipBy = country[Constrant.SHIPBY];
+				salesJournal.ShipByfalse = country[Constrant.SHIPBYFALSE];
 				salesJournal.DropShip = country[Constrant.DROPSHIP];
 				salesJournal.ShipToName = country[Constrant.SHIPTONAME];
 				salesJournal.ShipToAddress1 = country[Constrant.SHIPTOADDRESS1];
@@ -139,7 +153,7 @@ public class ExcelHelper {
 				salesJournal.Quantity = country[Constrant.QTY];
 				salesJournal.ItemID = country[Constrant.ITEMID];
 				salesJournal.Description = country[Constrant.DESCRIPTION];
-				
+				salesJournal.SOCntIdx = "" + soCntmap.get(country[Constrant.SO]); 
 				int shifIndex  = 0;
 				if(salesJournal.ItemID.startsWith("PLT")) 
 				{
@@ -170,10 +184,36 @@ public class ExcelHelper {
 						if(i.itemID.equals(salesJournal.ItemID)) {
 						salesJournal.SN = i.sn;
 						salesJournal.TrackingNO = i.trackingNo;
-						result.add(salesJournal);
-						System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
-								+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
-								+ "]");
+						salesJournal.ShippingDate = i.shippingDate;
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
+						try {
+							Date shippedDate = shipFormat.parse(salesJournal.ShippingDate.substring(0,10));
+							Calendar ship = Calendar.getInstance();
+							ship.setTime(shippedDate);
+							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+							salesJournal.ShippingDate = shipDate;
+							
+							Date date = formatter.parse(salesJournal.Date);
+							
+							Calendar c = Calendar.getInstance();
+						    c.setTime(date);
+						    c.add(Calendar.DATE, 31);
+
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
+
+							salesJournal.DueDate = dueDate;
+							
+							result.add(salesJournal);
+							System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
+									+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
+									+ "]");
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
 						}
 					}
 
@@ -205,25 +245,29 @@ public class ExcelHelper {
 		try {
 			fileWriter = new FileWriter(csvFile);
 
+		
 			// Write a new student object list to the CSV file
 			for (SalesJournal sales : salesOrder) {
+				
+			
 				fileWriter.append(String.valueOf(sales.CustomerID));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.SO));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("FALSE");
+				fileWriter.append(sales.ShipByfalse);
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("FALSE");
+				fileWriter.append(sales.ShipByfalse);
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.Date));
+				//fileWriter.append("FALSE");
+				//fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.ShippingDate));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.ShipBy));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.DropShip));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("FALSE");
-				fileWriter.append(COMMA_DELIMITER);
+			
 				fileWriter.append(String.valueOf(sales.ShipToName));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.ShipToAddress1));
@@ -248,9 +292,9 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.ShipVia));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.Date));
+				fileWriter.append(String.valueOf(sales.ShippingDate));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.Date));
+				fileWriter.append(String.valueOf(sales.DueDate));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.DiscountAmount));
 				fileWriter.append(COMMA_DELIMITER);
@@ -280,9 +324,16 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.SODistribution));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.Amount));
+				fileWriter.append(String.valueOf("0"));
 				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf("TRUE"));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf("FALSE"));
+				fileWriter.append(COMMA_DELIMITER);
+			
 				fileWriter.append(String.valueOf(sales.Quantity));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.SO));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.ItemID));
 				fileWriter.append(COMMA_DELIMITER);
@@ -290,6 +341,8 @@ public class ExcelHelper {
 					fileWriter.append("");
 				else
 					fileWriter.append(String.valueOf(sales.SN));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.SODistribution));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.Description));
 				fileWriter.append(COMMA_DELIMITER);
@@ -304,6 +357,8 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.Weight));
 				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.ProposalAccepted));
+				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.U_M));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.StockingQty));
@@ -312,8 +367,21 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.Amount));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.ProposalAccepted));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf("30"));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(sales.SOCntIdx);
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf("0"));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf("0"));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf("0"));
 				fileWriter.append(NEW_LINE_SEPARATOR);
+				
 			}
 
 			System.out.println("CSV file was created successfully !!!");

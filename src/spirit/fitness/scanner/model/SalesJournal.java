@@ -4,7 +4,10 @@ public class SalesJournal {
 	public String CustomerID;
 	public String SO;
 	public String Date;
+	public String ShippingDate;
+	public String DueDate;
 	public String ShipBy;
+	public String ShipByfalse;
 	public String DropShip;
 	public String ShipToName;
 	public String ShipToAddress1;
@@ -51,6 +54,7 @@ public class SalesJournal {
     public String InternalNote;
     public String TrackingNO;
     public String SN;
+    public String SOCntIdx;
     
     
     
