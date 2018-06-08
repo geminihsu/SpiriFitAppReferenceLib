@@ -4,19 +4,26 @@ public class SalesJournal {
 	public String CustomerID;
 	public String SO;
 	public String Date;
+	public String ShippingDate;
+	public String DueDate;
 	public String ShipBy;
+	public String ShipByfalse;
 	public String DropShip;
 	public String ShipToName;
 	public String ShipToAddress1;
 	public String ShipToAddress2;
 	public String ShipToCity;
     public String ShipToState;
+    public String ShipToPhone;
     public String ShipToZipCode;
+    public String ShipToCountryCode;
     public String ShipToCountry;
     public String CustPo;
+    public String AcountReceivableId;
     public String ShipVia;
     public String DiscountAmount;
     public String DisplayTerms;
+    public String DisplayType;
     public String SalesRepID;
     public String AcountReceivable;
     public String NotePrint;
@@ -47,6 +54,7 @@ public class SalesJournal {
     public String InternalNote;
     public String TrackingNO;
     public String SN;
+    public String SOCntIdx;
     
     
     

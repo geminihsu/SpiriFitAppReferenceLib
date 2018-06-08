@@ -7,6 +7,8 @@ public class Palletbean {
 	 public Integer seq;
 	 @SerializedName("ItemID")
 	 public String itemID;
+	 @SerializedName("FG")
+	 public String description;
 	 @SerializedName("SalesOrder")
 	 public String salesOrder;
 	 @SerializedName("TrackingNo")
@@ -23,8 +25,7 @@ public class Palletbean {
 	 public String shippedDate;
 	 @SerializedName("CreatedDate")
 	 public String createdDate;
-     @SerializedName("FG")
-     public String description;
-     @SerializedName("Qty")
-     public String qty;
+	 @SerializedName("Qty")
+	 public String qty;
+
 }
