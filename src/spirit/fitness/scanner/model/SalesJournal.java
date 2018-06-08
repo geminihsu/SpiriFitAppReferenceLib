@@ -11,12 +11,16 @@ public class SalesJournal {
 	public String ShipToAddress2;
 	public String ShipToCity;
     public String ShipToState;
+    public String ShipToPhone;
     public String ShipToZipCode;
+    public String ShipToCountryCode;
     public String ShipToCountry;
     public String CustPo;
+    public String AcountReceivableId;
     public String ShipVia;
     public String DiscountAmount;
     public String DisplayTerms;
+    public String DisplayType;
     public String SalesRepID;
     public String AcountReceivable;
     public String NotePrint;

@@ -121,12 +121,16 @@ public class ExcelHelper {
 				salesJournal.ShipToAddress2 = country[Constrant.SHIPTOADDRESS2];
 				salesJournal.ShipToCity = country[Constrant.SHIPTOCITY];
 				salesJournal.ShipToState = country[Constrant.SHIPTOSTATE];
+				salesJournal.ShipToPhone = country[Constrant.SHIPTOPHONE];
 				salesJournal.ShipToZipCode = country[Constrant.SHIPTOZIPCODE];
+				salesJournal.ShipToCountryCode = country[Constrant.SHIPTOZCODECOUNTRY];
 				salesJournal.ShipToCountry = country[Constrant.SHIPTOZIPCOUNTRY];
 				salesJournal.CustPo = country[Constrant.CUSTPO];
+				salesJournal.AcountReceivableId = country[Constrant.ACCOUNT_RECE_ID];
 				salesJournal.ShipVia = country[Constrant.SHIPVIA];
 				salesJournal.DiscountAmount = country[Constrant.DISCOUNT_AMOUNT];
 				salesJournal.DisplayTerms = country[Constrant.DISPLAY_TERMS];
+				salesJournal.DisplayType = country[Constrant.DISPLAY_TYPE];
 				salesJournal.SalesRepID = country[Constrant.SALES_REPID];
 				salesJournal.AcountReceivable = country[Constrant.ACCOUNT_RECEIVABLE];
 				salesJournal.NotePrint = country[Constrant.NOTE_PRINT];
@@ -136,16 +140,22 @@ public class ExcelHelper {
 				salesJournal.ItemID = country[Constrant.ITEMID];
 				salesJournal.Description = country[Constrant.DESCRIPTION];
 				
-			    salesJournal.GL_Account = country[Constrant.GL_ACCOUNT];
-				salesJournal.UnitPrice = country[Constrant.UNIT_PRICE];
-				salesJournal.TaxType = country[Constrant.TAX_TYPE];
-				salesJournal.UPC_SKU = country[Constrant.UPC_SKU]; 
-				salesJournal.Weight = country[Constrant.WEIGHT];
-				salesJournal.U_M = country[Constrant.U_M]; 
-				salesJournal.StockingQty = country[Constrant.STOCKING_QTY]; 
-				salesJournal.StockingUnitPrice = country[Constrant.STOCKING_UNIT_PRICE]; 
-				salesJournal.Amount = country[Constrant.AMOUNT]; 
-				salesJournal.ProposalAccepted = country[Constrant.PROPOSAL_ACCEPTED];
+				int shifIndex  = 0;
+				if(salesJournal.ItemID.startsWith("PLT")) 
+				{
+					salesJournal.Description = salesJournal.Description + country[Constrant.DESCRIPTION + 1];
+					shifIndex ++;
+				}
+			    salesJournal.GL_Account = country[Constrant.GL_ACCOUNT+shifIndex];
+				salesJournal.UnitPrice = country[Constrant.UNIT_PRICE+shifIndex];
+				salesJournal.TaxType = country[Constrant.TAX_TYPE+shifIndex];
+				salesJournal.UPC_SKU = country[Constrant.UPC_SKU+shifIndex]; 
+				salesJournal.Weight = country[Constrant.WEIGHT+shifIndex];
+				salesJournal.U_M = country[Constrant.U_M+shifIndex]; 
+				salesJournal.StockingQty = country[Constrant.STOCKING_QTY+shifIndex]; 
+				salesJournal.StockingUnitPrice = country[Constrant.STOCKING_UNIT_PRICE+shifIndex]; 
+				salesJournal.Amount = country[Constrant.AMOUNT+shifIndex]; 
+				salesJournal.ProposalAccepted = country[Constrant.PROPOSAL_ACCEPTED+shifIndex];
 			
 				int qty = 0;
 
@@ -162,7 +172,7 @@ public class ExcelHelper {
 						salesJournal.TrackingNO = i.trackingNo;
 						result.add(salesJournal);
 						System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
-								+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [Qty=" + salesJournal.Quantity
+								+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
 								+ "]");
 						}
 					}
@@ -224,27 +234,53 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.ShipToState));
 				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.ShipToPhone));
+				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.ShipToZipCode));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.ShipToCountryCode));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.ShipToCountry));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.CustPo));
 				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.AcountReceivableId));
+				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.ShipVia));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.Date));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.Date));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.DiscountAmount));
 				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.Date));
+				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.DisplayTerms));
 				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.DisplayType));
+				fileWriter.append(COMMA_DELIMITER);
+				
+				
 				fileWriter.append(String.valueOf(sales.SalesRepID));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("PRO# "+String.valueOf(sales.TrackingNO));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("TRUE");
+				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.AcountReceivable));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.NotePrint));
 				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append("FALSE");
+				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.numberOfDistribution));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.SODistribution));
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(String.valueOf(sales.Amount));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.Quantity));
 				fileWriter.append(COMMA_DELIMITER);
@@ -259,8 +295,7 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.GL_Account));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("PRO# "+String.valueOf(sales.TrackingNO));
-				fileWriter.append(COMMA_DELIMITER);
+				
 				fileWriter.append(String.valueOf(sales.UnitPrice));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.TaxType));
