@@ -226,6 +226,99 @@ public class ExcelHelper {
 					
 						}
 					}
+					
+					if(salesJournal.Description.startsWith("Freight"))
+					{
+						DailyShippingReportbean i = history.get(0);
+						salesJournal.TrackingNO = i.trackingNo;
+						salesJournal.ShippingDate = i.shippingDate;
+						salesJournal.SOCntIdx = "0";
+						salesJournal.ItemID = "";
+						salesJournal.SN = "";
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
+						try {
+							Date shippedDate = shipFormat.parse(salesJournal.ShippingDate.substring(0,10));
+							Calendar ship = Calendar.getInstance();
+							ship.setTime(shippedDate);
+							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+							salesJournal.ShippingDate = shipDate;
+							
+							Date date = formatter.parse(salesJournal.Date);
+							
+							Calendar c = Calendar.getInstance();
+						    c.setTime(date);
+						    
+						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
+						    	c.add(Calendar.DATE, 30);
+						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
+						    	c.add(Calendar.DATE, 45);
+						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
+						    	c.add(Calendar.DATE, 60);
+						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
+						    	c.add(Calendar.DATE, 90);
+						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
+						    	c.add(Calendar.DATE, 0);
+
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
+
+							salesJournal.DueDate = dueDate;
+							
+							result.add(salesJournal);
+							System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
+									+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
+									+ "]");
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if(salesJournal.Description.startsWith("SHIPPER'S"))
+					{
+						DailyShippingReportbean i = history.get(0);
+						salesJournal.TrackingNO = i.trackingNo;
+						salesJournal.ShippingDate = i.shippingDate;
+						salesJournal.ItemID = "";
+						salesJournal.SN = "";
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
+						try {
+							Date shippedDate = shipFormat.parse(salesJournal.ShippingDate.substring(0,10));
+							Calendar ship = Calendar.getInstance();
+							ship.setTime(shippedDate);
+							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+							salesJournal.ShippingDate = shipDate;
+							
+							Date date = formatter.parse(salesJournal.Date);
+							
+							Calendar c = Calendar.getInstance();
+						    c.setTime(date);
+						    
+						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
+						    	c.add(Calendar.DATE, 30);
+						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
+						    	c.add(Calendar.DATE, 45);
+						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
+						    	c.add(Calendar.DATE, 60);
+						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
+						    	c.add(Calendar.DATE, 90);
+						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
+						    	c.add(Calendar.DATE, 0);
+
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
+
+							salesJournal.DueDate = dueDate;
+							
+							result.add(salesJournal);
+							System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
+									+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
+									+ "]");
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 
 					//qty--;
 				//}
