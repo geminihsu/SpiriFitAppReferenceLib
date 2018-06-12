@@ -240,7 +240,7 @@ public class ExcelHelper {
 
 	public static void writeToCVS(String path,List<SalesJournal> salesOrder) {
 		FileWriter fileWriter = null;
-		String csvFile = path + "\\SALES.csv";
+		String csvFile = path + "\\SALES.CSV";
 
 		try {
 			fileWriter = new FileWriter(csvFile);
