@@ -204,6 +204,8 @@ public class ExcelHelper {
 						    	c.add(Calendar.DATE, 30);
 						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
 						    	c.add(Calendar.DATE, 45);
+						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
+						    	c.add(Calendar.DATE, 60);
 						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
 						    	c.add(Calendar.DATE, 90);
 						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
@@ -260,7 +262,11 @@ public class ExcelHelper {
 			
 				fileWriter.append(String.valueOf(sales.CustomerID));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.SO));
+				
+				String salesOrderhead = String.valueOf(sales.SO);
+				if(salesOrderhead.indexOf("EDI") == -1)
+					salesOrderhead = "P"+salesOrderhead;
+				fileWriter.append(salesOrderhead);
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(sales.ShipByfalse);
