@@ -14,7 +14,6 @@ import java.util.List;
 public class Historybean {
 
 
-
     @SerializedName("seq")
     public Integer seq;
     @SerializedName("SN")

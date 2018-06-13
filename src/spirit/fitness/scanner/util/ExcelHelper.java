@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -106,6 +107,7 @@ public class ExcelHelper {
 		String cvsSplitBy = ",";
 		int soIndex = 1;
 		HashMap<String, Integer> soCntmap = new HashMap<String, Integer>();
+		HashSet<String> snMap = new HashSet<String>();
 		List<SalesJournal> result = new ArrayList<SalesJournal>();
 		try {
 
@@ -181,10 +183,68 @@ public class ExcelHelper {
 
 					for (DailyShippingReportbean i : history) {
 						
+						if(i.sn != null && snMap.contains(i.sn))
+							continue;
+						
 						if(i.itemID.equals(salesJournal.ItemID)) {
-						salesJournal.SN = i.sn;
+					    SalesJournal salesJournal2 = copyData(salesJournal) ;
+					    salesJournal2.SN = i.sn;
+					    salesJournal2.TrackingNO = i.trackingNo;
+					    salesJournal2.ShippingDate = i.shippingDate;
+						snMap.add(i.sn);
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
+						try {
+							Date shippedDate = shipFormat.parse(salesJournal2.ShippingDate.substring(0,10));
+							Calendar ship = Calendar.getInstance();
+							ship.setTime(shippedDate);
+							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+							salesJournal2.ShippingDate = shipDate;
+							
+							Date date = formatter.parse(salesJournal2.Date);
+							
+							Calendar c = Calendar.getInstance();
+						    c.setTime(date);
+						    
+						    if(salesJournal2.DisplayTerms.indexOf("30") != -1)
+						    	c.add(Calendar.DATE, 30);
+						    else if(salesJournal2.DisplayTerms.indexOf("45") != -1)
+						    	c.add(Calendar.DATE, 45);
+						    else if(salesJournal2.DisplayTerms.indexOf("60") != -1)
+						    	c.add(Calendar.DATE, 60);
+						    else if(salesJournal2.DisplayTerms.indexOf("90") != -1)
+						    	c.add(Calendar.DATE, 90);
+						    else if(salesJournal2.DisplayTerms.equals("Prepaid"))
+						    	c.add(Calendar.DATE, 0);
+
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
+                            
+							if(dueDate.indexOf("0018") != -1)
+								dueDate = dueDate.replace("0018", "2018");
+								
+							salesJournal2.DueDate = dueDate;
+							
+							result.add(salesJournal2);
+							System.out.println("Sales [order = " + salesJournal2.SO + "] , [itemID=" + salesJournal2.ItemID
+									+ "]" + " , [SN=" + salesJournal2.SN + "]" + " , [UnitPrice=" + salesJournal2.UnitPrice
+									+ "]");
+							//break;
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
+						}
+					}
+					
+					if(salesJournal.Description.startsWith("Freight"))
+					{
+						DailyShippingReportbean i = history.get(0);
 						salesJournal.TrackingNO = i.trackingNo;
 						salesJournal.ShippingDate = i.shippingDate;
+						salesJournal.SOCntIdx = "0";
+						salesJournal.ItemID = "";
+						salesJournal.SN = "";
 						
 						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -199,7 +259,17 @@ public class ExcelHelper {
 							
 							Calendar c = Calendar.getInstance();
 						    c.setTime(date);
-						    c.add(Calendar.DATE, 31);
+						    
+						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
+						    	c.add(Calendar.DATE, 30);
+						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
+						    	c.add(Calendar.DATE, 45);
+						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
+						    	c.add(Calendar.DATE, 60);
+						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
+						    	c.add(Calendar.DATE, 90);
+						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
+						    	c.add(Calendar.DATE, 0);
 
 							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
 
@@ -209,11 +279,60 @@ public class ExcelHelper {
 							System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
 									+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
 									+ "]");
+							
+
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					
+					}else if(salesJournal.Description.startsWith("SHIPPER'S"))
+					{
+						DailyShippingReportbean i = history.get(0);
+						salesJournal.TrackingNO = i.trackingNo;
+						salesJournal.ShippingDate = i.shippingDate;
+
+						salesJournal.ItemID = "";
+						salesJournal.SN = "";
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
+						try {
+							Date shippedDate = shipFormat.parse(salesJournal.ShippingDate.substring(0,10));
+							Calendar ship = Calendar.getInstance();
+							ship.setTime(shippedDate);
+							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+							salesJournal.ShippingDate = shipDate;
+							
+							Date date = formatter.parse(salesJournal.Date);
+							
+							Calendar c = Calendar.getInstance();
+						    c.setTime(date);
+						    
+						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
+						    	c.add(Calendar.DATE, 30);
+						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
+						    	c.add(Calendar.DATE, 45);
+						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
+						    	c.add(Calendar.DATE, 60);
+						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
+						    	c.add(Calendar.DATE, 90);
+						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
+						    	c.add(Calendar.DATE, 0);
+
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
+
+							if(dueDate.indexOf("0018") != -1)
+								dueDate.replace("0018", "2018");
+							
+							salesJournal.DueDate = dueDate;
+							
+							result.add(salesJournal);
+							System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
+									+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
+									+ "]");
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
 
@@ -238,7 +357,7 @@ public class ExcelHelper {
 		return result;
 	}
 
-	public static void writeToCVS(String path,List<SalesJournal> salesOrder) {
+	public static boolean writeToCVS(String path,List<SalesJournal> salesOrder) {
 		FileWriter fileWriter = null;
 		String csvFile = path + "\\SALES.CSV";
 
@@ -252,7 +371,11 @@ public class ExcelHelper {
 			
 				fileWriter.append(String.valueOf(sales.CustomerID));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.SO));
+				
+				String salesOrderhead = String.valueOf(sales.SO);
+				if(salesOrderhead.indexOf("EDI") == -1)
+					salesOrderhead = "P"+salesOrderhead;
+				fileWriter.append(salesOrderhead);
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(sales.ShipByfalse);
@@ -385,10 +508,11 @@ public class ExcelHelper {
 			}
 
 			System.out.println("CSV file was created successfully !!!");
-
+            return true;
 		} catch (Exception e) {
 			System.out.println("Error in CsvFileWriter !!!");
 			e.printStackTrace();
+			return false;
 		} finally {
 
 			try {
@@ -397,12 +521,60 @@ public class ExcelHelper {
 			} catch (IOException e) {
 				System.out.println("Error while flushing/closing fileWriter !!!");
 				e.printStackTrace();
+				return false;
 			}
 
 		}
 	}
 
+	private static SalesJournal copyData(SalesJournal s) 
+	{
+		SalesJournal  salesJournal = new SalesJournal();
+		salesJournal.CustomerID = s.CustomerID;
+		salesJournal.SO = s.SO ;
+		salesJournal.Date = s.Date;
+		salesJournal.ShipBy = s.ShipBy;
+		salesJournal.ShipByfalse = s.ShipByfalse;
+		salesJournal.DropShip = s.DropShip;
+		salesJournal.ShipToName = s.ShipToName;
+		salesJournal.ShipToAddress1 = s.ShipToAddress1;
+		salesJournal.ShipToAddress2 = s.ShipToAddress2;
+		salesJournal.ShipToCity = s.ShipToCity;
+		salesJournal.ShipToState = s.ShipToState;
+		salesJournal.ShipToPhone = s.ShipToPhone;
+		salesJournal.ShipToZipCode = s.ShipToZipCode;
+		salesJournal.ShipToCountryCode = s.ShipToCountryCode;
+		salesJournal.ShipToCountry = s.ShipToCountry;
+		salesJournal.CustPo = s.CustPo;
+		salesJournal.AcountReceivableId = s.AcountReceivableId;
+		salesJournal.ShipVia = s.ShipVia;
+		salesJournal.DiscountAmount = s.DiscountAmount;
+		salesJournal.DisplayTerms = s.DisplayTerms;
+		salesJournal.DisplayType = s.DisplayType ;
+		salesJournal.SalesRepID = s.SalesRepID;
+		salesJournal.AcountReceivable = s.AcountReceivable;
+		salesJournal.NotePrint = s.NotePrint;
+		salesJournal.numberOfDistribution = s.numberOfDistribution;
+		salesJournal.SODistribution = s.SODistribution;
+		salesJournal.Quantity = s.Quantity;
+		salesJournal.ItemID = s.ItemID;
+		salesJournal.Description = s.Description;
+		salesJournal.SOCntIdx = "" + s.SOCntIdx; 
+		salesJournal.Description = s.Description;
+			
+	    salesJournal.GL_Account = s.GL_Account ;
+		salesJournal.UnitPrice = s.UnitPrice;
+		salesJournal.TaxType = s.TaxType;
+		salesJournal.UPC_SKU = s.UPC_SKU ; 
+		salesJournal.Weight = s.Weight;
+		salesJournal.U_M = s.U_M ; 
+		salesJournal.StockingQty = s.StockingQty; 
+		salesJournal.StockingUnitPrice = s.StockingUnitPrice; 
+		salesJournal.Amount = s.Amount; 
+		salesJournal.ProposalAccepted =s.ProposalAccepted;
 	
+		return salesJournal;
+	}
 	// public static void main(String[] args) {
 	// ExcelHelper excelhelper = new ExcelHelper();
 	// readCSVFile();

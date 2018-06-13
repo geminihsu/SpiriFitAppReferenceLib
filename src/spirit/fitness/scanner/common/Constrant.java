@@ -11,7 +11,7 @@ import spirit.fitness.scanner.model.Modelbean;
 
 
 public class Constrant {
-	public static String webUrl = "http://172.16.2.96:5000";
+	public static String webUrl = "http://172.16.2.6";
 	//public static String webUrl = "http://172.16.2.6";
 	//public static String weburlprefix = "FGService/api/";
 	
@@ -68,7 +68,7 @@ public class Constrant {
     public static Color BUTTON_BACKGROUN_COLOR = new java.awt.Color(255, 255, 240);
     
      
-    //SalesJournal attributes index
+  //SalesJournal attributes index
     public static final int CUSTOMERID = 0;
     public static final int SO = 1;
     public static final int DATE = 2;
@@ -108,6 +108,7 @@ public class Constrant {
     public static final int STOCKING_UNIT_PRICE = 40;
     public static final int AMOUNT = 41;
     public static final int PROPOSAL_ACCEPTED = 42;
+    
     
     public static String serial_list = "";
   
