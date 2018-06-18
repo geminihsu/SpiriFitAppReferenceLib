@@ -67,7 +67,7 @@ public class ExcelHelper {
 		}
 	}
 
-	public void fillDailyShippingData(JTable table, File file) {
+	public static void fillDailyShippingData(JTable table, File file) {
 
 		try {
 
