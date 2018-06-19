@@ -27,7 +27,7 @@ public class EmailHelper {
 
 	public static void sendMail(String scanDate, List<Containerbean> containInfo, String items,String email) {
 
-		final String username = "geminih@spiritfitness.com";
+		final String username = "donotreply@spiritfitness.com";
 		final String password = "$pirit3Ma1l";
 
 		Properties props = new Properties();
@@ -48,7 +48,7 @@ public class EmailHelper {
 			// HH:mm:ss").format(Calendar.getInstance().getTime());
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("geminih@spiritfitness.com"));
+			message.setFrom(new InternetAddress("donotreply@spiritfitness.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
 			message.setSubject(scanDate + " Container #" + containInfo.get(0).ContainerNo);
