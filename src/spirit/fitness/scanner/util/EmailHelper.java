@@ -28,7 +28,7 @@ public class EmailHelper {
 	public static void sendMail(String scanDate, List<Containerbean> containInfo, String items,String email) {
 
 		final String username = "donotreply@spiritfitness.com";
-		final String password = "$pirit3Ma1l";
+		final String password = "Dy@c01234";
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
