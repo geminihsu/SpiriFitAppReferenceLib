@@ -51,7 +51,7 @@ public class EmailHelper {
 			message.setFrom(new InternetAddress("donotreply@spiritfitness.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
-			message.setSubject(scanDate + " Container #" + containInfo.get(0).ContainerNo);
+			message.setSubject("TEST mail:"+scanDate + " Container #" + containInfo.get(0).ContainerNo);
 
 			String[] scanitems = items.split("\n");
 			String mailContent = "------------------------------------------------------------<br>" ;
