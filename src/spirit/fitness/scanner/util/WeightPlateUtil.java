@@ -12,7 +12,7 @@ public class WeightPlateUtil {
 	
 	private static final String MA900 = "790072";
 	private static final String MA901 = "790172";
-
+	private static final String MA903 = "990170";
 	
 	private static String MS7MODEL = "900MS7";
 	private static String LP7MODEL = "900LP7";
@@ -36,7 +36,7 @@ public class WeightPlateUtil {
 	
 	
 	public static boolean isCalfSupport(String item) {
-		if (item.equals(MA902) || item.equals(MA906) || item.equals(MA900)|| item.equals(MA901))
+		if (item.equals(MA902) || item.equals(MA906) || item.equals(MA900)|| item.equals(MA901)|| item.equals(MA903))
 			return true;
 		return false;
 	}
