@@ -25,6 +25,8 @@ public class WeightPlateUtil {
 	private static String INSIDE_DELIVERY_REQUIRED = "10034";
 	private static String DELIVERY_REQUIRED_1 = "10049";
 	private static String DELIVERY_REQUIRED_2 = "10050";
+    private static String DROP_SHIP_FEE = "10048";
+
 	
 	public static boolean isWeightPlate(String item) {
 		if (item.equals(WEIGHT_PLATE_170Cartons) || item.equals(WEIGHT_PLATE_20_80)
@@ -70,7 +72,7 @@ public class WeightPlateUtil {
 	
 	public static boolean isShippingRequired(String required) 
 	{
-		if (required.equals(LIFTGATE_REQUIRED) || required.equals(HOUR_REQUIRED) || required.equals(INSIDE_DELIVERY_REQUIRED)|| required.equals(DELIVERY_REQUIRED_1)|| required.equals(DELIVERY_REQUIRED_2))
+		if (required.equals(LIFTGATE_REQUIRED) || required.equals(HOUR_REQUIRED) || required.equals(INSIDE_DELIVERY_REQUIRED)|| required.equals(DELIVERY_REQUIRED_1)|| required.equals(DELIVERY_REQUIRED_2) || required.equals(DROP_SHIP_FEE))
 			return true;
 		return false;
 	}
