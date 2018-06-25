@@ -67,7 +67,7 @@ public class ExcelHelper {
 		}
 	}
 
-	public void fillDailyShippingData(JTable table, File file) {
+	public static void fillDailyShippingData(JTable table, File file) {
 
 		try {
 
@@ -207,17 +207,17 @@ public class ExcelHelper {
 						    c.setTime(date);
 						    
 						    if(salesJournal2.DisplayTerms.indexOf("30") != -1)
-						    	c.add(Calendar.DATE, 30);
+						    	ship.add(Calendar.DATE, 30);
 						    else if(salesJournal2.DisplayTerms.indexOf("45") != -1)
-						    	c.add(Calendar.DATE, 45);
+						    	ship.add(Calendar.DATE, 45);
 						    else if(salesJournal2.DisplayTerms.indexOf("60") != -1)
-						    	c.add(Calendar.DATE, 60);
+						    	ship.add(Calendar.DATE, 60);
 						    else if(salesJournal2.DisplayTerms.indexOf("90") != -1)
-						    	c.add(Calendar.DATE, 90);
+						    	ship.add(Calendar.DATE, 90);
 						    else if(salesJournal2.DisplayTerms.equals("Prepaid"))
-						    	c.add(Calendar.DATE, 0);
+						    	ship.add(Calendar.DATE, 0);
 
-							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
                             
 							if(dueDate.indexOf("0018") != -1)
 								dueDate = dueDate.replace("0018", "2018");
@@ -242,7 +242,7 @@ public class ExcelHelper {
 						DailyShippingReportbean i = history.get(0);
 						salesJournal.TrackingNO = i.trackingNo;
 						salesJournal.ShippingDate = i.shippingDate;
-						salesJournal.SOCntIdx = "0";
+						salesJournal.SOCntIdx = "" + soCntmap.get(country[Constrant.SO]); 
 						salesJournal.ItemID = "";
 						salesJournal.SN = "";
 						
@@ -261,18 +261,22 @@ public class ExcelHelper {
 						    c.setTime(date);
 						    
 						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
-						    	c.add(Calendar.DATE, 30);
+						    	ship.add(Calendar.DATE, 30);
 						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
-						    	c.add(Calendar.DATE, 45);
+						    	ship.add(Calendar.DATE, 45);
 						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
-						    	c.add(Calendar.DATE, 60);
+						    	ship.add(Calendar.DATE, 60);
 						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
-						    	c.add(Calendar.DATE, 90);
+						    	ship.add(Calendar.DATE, 90);
 						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
-						    	c.add(Calendar.DATE, 0);
+						    	ship.add(Calendar.DATE, 0);
 
-							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
-
+						    
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+							
+							if(dueDate.indexOf("0018") != -1)
+								dueDate = dueDate.replace("0018", "2018");
+							
 							salesJournal.DueDate = dueDate;
 							
 							result.add(salesJournal);
@@ -309,20 +313,20 @@ public class ExcelHelper {
 						    c.setTime(date);
 						    
 						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
-						    	c.add(Calendar.DATE, 30);
+						    	ship.add(Calendar.DATE, 30);
 						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
-						    	c.add(Calendar.DATE, 45);
+						    	ship.add(Calendar.DATE, 45);
 						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
-						    	c.add(Calendar.DATE, 60);
+						    	ship.add(Calendar.DATE, 60);
 						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
-						    	c.add(Calendar.DATE, 90);
+						    	ship.add(Calendar.DATE, 90);
 						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
-						    	c.add(Calendar.DATE, 0);
+						    	ship.add(Calendar.DATE, 0);
 
-							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
 
 							if(dueDate.indexOf("0018") != -1)
-								dueDate.replace("0018", "2018");
+								dueDate = dueDate.replace("0018", "2018");
 							
 							salesJournal.DueDate = dueDate;
 							
