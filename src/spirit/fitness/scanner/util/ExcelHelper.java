@@ -153,7 +153,12 @@ public class ExcelHelper {
 				salesJournal.numberOfDistribution = country[Constrant.NUMBEROFDISTRIBUTION];
 				salesJournal.SODistribution = country[Constrant.SODISTRIBUTION];
 				salesJournal.Quantity = country[Constrant.QTY];
-				salesJournal.ItemID = country[Constrant.ITEMID];
+				
+				if(country[Constrant.ITEMID].equals(""))
+					salesJournal.ItemID = "";
+				else
+					salesJournal.ItemID = country[Constrant.ITEMID];
+				
 				salesJournal.Description = country[Constrant.DESCRIPTION];
 				salesJournal.SOCntIdx = "" + soCntmap.get(country[Constrant.SO]); 
 				int shifIndex  = 0;
@@ -239,36 +244,37 @@ public class ExcelHelper {
 					
 					if(salesJournal.Description.startsWith("Freight"))
 					{
+						SalesJournal salesJournal2 = copyData(salesJournal) ;
 						DailyShippingReportbean i = history.get(0);
-						salesJournal.TrackingNO = i.trackingNo;
-						salesJournal.ShippingDate = i.shippingDate;
-						salesJournal.SOCntIdx = "" + soCntmap.get(country[Constrant.SO]); 
-						salesJournal.ItemID = "";
-						salesJournal.SN = "";
+						salesJournal2.TrackingNO = i.trackingNo;
+						salesJournal2.ShippingDate = i.shippingDate;
+						salesJournal2.SOCntIdx = "" + soCntmap.get(country[Constrant.SO]); 
+						salesJournal2.ItemID = "";
+						salesJournal2.SN = "";
 						
 						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
 						try {
-							Date shippedDate = shipFormat.parse(salesJournal.ShippingDate.substring(0,10));
+							Date shippedDate = shipFormat.parse(salesJournal2.ShippingDate.substring(0,10));
 							Calendar ship = Calendar.getInstance();
 							ship.setTime(shippedDate);
 							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
-							salesJournal.ShippingDate = shipDate;
+							salesJournal2.ShippingDate = shipDate;
 							
-							Date date = formatter.parse(salesJournal.Date);
+							Date date = formatter.parse(salesJournal2.Date);
 							
 							Calendar c = Calendar.getInstance();
 						    c.setTime(date);
 						    
-						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
+						    if(salesJournal2.DisplayTerms.indexOf("30") != -1)
 						    	ship.add(Calendar.DATE, 30);
-						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
+						    else if(salesJournal2.DisplayTerms.indexOf("45") != -1)
 						    	ship.add(Calendar.DATE, 45);
-						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
+						    else if(salesJournal2.DisplayTerms.indexOf("60") != -1)
 						    	ship.add(Calendar.DATE, 60);
-						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
+						    else if(salesJournal2.DisplayTerms.indexOf("90") != -1)
 						    	ship.add(Calendar.DATE, 90);
-						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
+						    else if(salesJournal2.DisplayTerms.equals("Prepaid"))
 						    	ship.add(Calendar.DATE, 0);
 
 						    
@@ -277,11 +283,11 @@ public class ExcelHelper {
 							if(dueDate.indexOf("0018") != -1)
 								dueDate = dueDate.replace("0018", "2018");
 							
-							salesJournal.DueDate = dueDate;
+							salesJournal2.DueDate = dueDate;
 							
-							result.add(salesJournal);
-							System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
-									+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
+							result.add(salesJournal2);
+							System.out.println("Sales [order = " + salesJournal2.SO + "] , [itemID=" + salesJournal2.ItemID
+									+ "]" + " , [Description=" + salesJournal2.Description + "]" + " , [UnitPrice=" + salesJournal2.UnitPrice
 									+ "]");
 							
 
@@ -291,36 +297,37 @@ public class ExcelHelper {
 						}
 					}else if(salesJournal.Description.startsWith("SHIPPER'S"))
 					{
+						SalesJournal salesJournal2 = copyData(salesJournal) ;
 						DailyShippingReportbean i = history.get(0);
-						salesJournal.TrackingNO = i.trackingNo;
-						salesJournal.ShippingDate = i.shippingDate;
+						salesJournal2.TrackingNO = i.trackingNo;
+						salesJournal2.ShippingDate = i.shippingDate;
 
-						salesJournal.ItemID = "";
-						salesJournal.SN = "";
+						salesJournal2.ItemID = "";
+						salesJournal2.SN = "";
 						
 						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
 						try {
-							Date shippedDate = shipFormat.parse(salesJournal.ShippingDate.substring(0,10));
+							Date shippedDate = shipFormat.parse(salesJournal2.ShippingDate.substring(0,10));
 							Calendar ship = Calendar.getInstance();
 							ship.setTime(shippedDate);
 							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
-							salesJournal.ShippingDate = shipDate;
+							salesJournal2.ShippingDate = shipDate;
 							
 							Date date = formatter.parse(salesJournal.Date);
 							
 							Calendar c = Calendar.getInstance();
 						    c.setTime(date);
 						    
-						    if(salesJournal.DisplayTerms.indexOf("30") != -1)
+						    if(salesJournal2.DisplayTerms.indexOf("30") != -1)
 						    	ship.add(Calendar.DATE, 30);
-						    else if(salesJournal.DisplayTerms.indexOf("45") != -1)
+						    else if(salesJournal2.DisplayTerms.indexOf("45") != -1)
 						    	ship.add(Calendar.DATE, 45);
-						    else if(salesJournal.DisplayTerms.indexOf("60") != -1)
+						    else if(salesJournal2.DisplayTerms.indexOf("60") != -1)
 						    	ship.add(Calendar.DATE, 60);
-						    else if(salesJournal.DisplayTerms.indexOf("90") != -1)
+						    else if(salesJournal2.DisplayTerms.indexOf("90") != -1)
 						    	ship.add(Calendar.DATE, 90);
-						    else if(salesJournal.DisplayTerms.equals("Prepaid"))
+						    else if(salesJournal2.DisplayTerms.equals("Prepaid"))
 						    	ship.add(Calendar.DATE, 0);
 
 							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
@@ -328,11 +335,11 @@ public class ExcelHelper {
 							if(dueDate.indexOf("0018") != -1)
 								dueDate = dueDate.replace("0018", "2018");
 							
-							salesJournal.DueDate = dueDate;
+							salesJournal2.DueDate = dueDate;
 							
-							result.add(salesJournal);
-							System.out.println("Sales [order = " + salesJournal.SO + "] , [itemID=" + salesJournal.ItemID
-									+ "]" + " , [SN=" + salesJournal.SN + "]" + " , [UnitPrice=" + salesJournal.UnitPrice
+							result.add(salesJournal2);
+							System.out.println("Sales [order = " + salesJournal2.SO + "] , [itemID=" + salesJournal2.ItemID
+									+ "]" + " , [Description=" + salesJournal2.Description + "]" + " , [UnitPrice=" + salesJournal2.UnitPrice
 									+ "]");
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
@@ -436,7 +443,10 @@ public class ExcelHelper {
 				fileWriter.append(String.valueOf(sales.SalesRepID));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append("PRO# "+String.valueOf(sales.TrackingNO));
+				if(String.valueOf(sales.TrackingNO).equals(""))
+					fileWriter.append(String.valueOf(sales.TrackingNO));
+				else
+					fileWriter.append("PRO# "+String.valueOf(sales.TrackingNO));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append("TRUE");
 				fileWriter.append(COMMA_DELIMITER);
@@ -462,7 +472,11 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.SO));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.ItemID));
+				
+				if(sales.ItemID == null || sales.ItemID.equals(""))
+					fileWriter.append("");
+				else
+					fileWriter.append(String.valueOf(sales.ItemID));
 				fileWriter.append(COMMA_DELIMITER);
 				if(sales.SN == null)
 					fileWriter.append("");
