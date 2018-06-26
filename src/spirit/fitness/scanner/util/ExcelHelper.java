@@ -153,7 +153,12 @@ public class ExcelHelper {
 				salesJournal.numberOfDistribution = country[Constrant.NUMBEROFDISTRIBUTION];
 				salesJournal.SODistribution = country[Constrant.SODISTRIBUTION];
 				salesJournal.Quantity = country[Constrant.QTY];
-				salesJournal.ItemID = country[Constrant.ITEMID];
+				
+				if(country[Constrant.ITEMID].equals(""))
+					salesJournal.ItemID = "";
+				else
+					salesJournal.ItemID = country[Constrant.ITEMID];
+				
 				salesJournal.Description = country[Constrant.DESCRIPTION];
 				salesJournal.SOCntIdx = "" + soCntmap.get(country[Constrant.SO]); 
 				int shifIndex  = 0;
@@ -462,7 +467,11 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.SO));
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(String.valueOf(sales.ItemID));
+				
+				if(sales.ItemID == null || sales.ItemID.equals(""))
+					fileWriter.append("");
+				else
+					fileWriter.append(String.valueOf(sales.ItemID));
 				fileWriter.append(COMMA_DELIMITER);
 				if(sales.SN == null)
 					fileWriter.append("");
