@@ -179,24 +179,29 @@ public class ExcelHelper {
 				salesJournal.ProposalAccepted = country[Constrant.PROPOSAL_ACCEPTED+shifIndex];
 			
 				int qty = 0;
-
+	
 				if (salesJournal.Quantity.indexOf(".") != -1)
 					qty = Integer.valueOf(salesJournal.Quantity.substring(0, salesJournal.Quantity.indexOf(".")));
 				//while (qty > 0) {
 
 					List<DailyShippingReportbean> history = soMap.get(country[Constrant.SO]);
 
+			
 					for (DailyShippingReportbean i : history) {
 						
 						if(i.sn != null && snMap.contains(i.sn))
 							continue;
 						
-						if(i.itemID.equals(salesJournal.ItemID)) {
+						if(i.itemID.equals(salesJournal.ItemID) && !i.itemID.equals("")) {
+							
 					    SalesJournal salesJournal2 = copyData(salesJournal) ;
 					    salesJournal2.SN = i.sn;
 					    salesJournal2.TrackingNO = i.trackingNo;
 					    salesJournal2.ShippingDate = i.shippingDate;
+					    salesJournal2.Quantity = salesJournal.Quantity;
 						snMap.add(i.sn);
+						
+						
 						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
 						try {
@@ -228,6 +233,8 @@ public class ExcelHelper {
 								dueDate = dueDate.replace("0018", "2018");
 								
 							salesJournal2.DueDate = dueDate;
+							
+						
 							
 							result.add(salesJournal2);
 							System.out.println("Sales [order = " + salesJournal2.SO + "] , [itemID=" + salesJournal2.ItemID
@@ -295,7 +302,107 @@ public class ExcelHelper {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					}else if(salesJournal.Description.startsWith("SHIPPER'S"))
+					}else if(salesJournal.Description.startsWith("SHIPPER'S")||salesJournal.Description.startsWith("CHERISE CRISMAN "))
+					{
+						SalesJournal salesJournal2 = copyData(salesJournal) ;
+						DailyShippingReportbean i = history.get(0);
+						salesJournal2.TrackingNO = i.trackingNo;
+						salesJournal2.ShippingDate = i.shippingDate;
+
+						salesJournal2.ItemID = "";
+						salesJournal2.SN = "";
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
+						try {
+							Date shippedDate = shipFormat.parse(salesJournal2.ShippingDate.substring(0,10));
+							Calendar ship = Calendar.getInstance();
+							ship.setTime(shippedDate);
+							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+							salesJournal2.ShippingDate = shipDate;
+							
+							Date date = formatter.parse(salesJournal.Date);
+							
+							Calendar c = Calendar.getInstance();
+						    c.setTime(date);
+						    
+						    if(salesJournal2.DisplayTerms.indexOf("30") != -1)
+						    	ship.add(Calendar.DATE, 30);
+						    else if(salesJournal2.DisplayTerms.indexOf("45") != -1)
+						    	ship.add(Calendar.DATE, 45);
+						    else if(salesJournal2.DisplayTerms.indexOf("60") != -1)
+						    	ship.add(Calendar.DATE, 60);
+						    else if(salesJournal2.DisplayTerms.indexOf("90") != -1)
+						    	ship.add(Calendar.DATE, 90);
+						    else if(salesJournal2.DisplayTerms.equals("Prepaid"))
+						    	ship.add(Calendar.DATE, 0);
+
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+
+							if(dueDate.indexOf("0018") != -1)
+								dueDate = dueDate.replace("0018", "2018");
+							
+							salesJournal2.DueDate = dueDate;
+							
+							result.add(salesJournal2);
+							System.out.println("Sales [order = " + salesJournal2.SO + "] , [itemID=" + salesJournal2.ItemID
+									+ "]" + " , [Description=" + salesJournal2.Description + "]" + " , [UnitPrice=" + salesJournal2.UnitPrice
+									+ "]");
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if(salesJournal.Description.equals("") && !salesJournal.GL_Account.equals("") )
+					{
+						SalesJournal salesJournal2 = copyData(salesJournal) ;
+						DailyShippingReportbean i = history.get(0);
+						salesJournal2.TrackingNO = i.trackingNo;
+						salesJournal2.ShippingDate = i.shippingDate;
+
+						salesJournal2.ItemID = "";
+						salesJournal2.SN = "";
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+						SimpleDateFormat shipFormat = new SimpleDateFormat("yyyy-MM-dd");
+						try {
+							Date shippedDate = shipFormat.parse(salesJournal2.ShippingDate.substring(0,10));
+							Calendar ship = Calendar.getInstance();
+							ship.setTime(shippedDate);
+							String shipDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+							salesJournal2.ShippingDate = shipDate;
+							
+							Date date = formatter.parse(salesJournal.Date);
+							
+							Calendar c = Calendar.getInstance();
+						    c.setTime(date);
+						    
+						    if(salesJournal2.DisplayTerms.indexOf("30") != -1)
+						    	ship.add(Calendar.DATE, 30);
+						    else if(salesJournal2.DisplayTerms.indexOf("45") != -1)
+						    	ship.add(Calendar.DATE, 45);
+						    else if(salesJournal2.DisplayTerms.indexOf("60") != -1)
+						    	ship.add(Calendar.DATE, 60);
+						    else if(salesJournal2.DisplayTerms.indexOf("90") != -1)
+						    	ship.add(Calendar.DATE, 90);
+						    else if(salesJournal2.DisplayTerms.equals("Prepaid"))
+						    	ship.add(Calendar.DATE, 0);
+
+							String dueDate = new SimpleDateFormat("MM/dd/yyyy").format(ship.getTime());
+
+							if(dueDate.indexOf("0018") != -1)
+								dueDate = dueDate.replace("0018", "2018");
+							
+							salesJournal2.DueDate = dueDate;
+							
+							result.add(salesJournal2);
+							System.out.println("Sales [order = " + salesJournal2.SO + "] , [itemID=" + salesJournal2.ItemID
+									+ "]" + " , [Description=" + salesJournal2.Description + "]" + " , [UnitPrice=" + salesJournal2.UnitPrice
+									+ "]");
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else if(salesJournal.ItemID.equals("") && !salesJournal.Description.equals("") && salesJournal.UnitPrice.equals("0.00") )
 					{
 						SalesJournal salesJournal2 = copyData(salesJournal) ;
 						DailyShippingReportbean i = history.get(0);
