@@ -552,8 +552,13 @@ public class ExcelHelper {
 				fileWriter.append(COMMA_DELIMITER);
 				if(String.valueOf(sales.TrackingNO).equals(""))
 					fileWriter.append(String.valueOf(sales.TrackingNO));
-				else
-					fileWriter.append("PRO# "+String.valueOf(sales.TrackingNO));
+				else {
+					String pro = String.valueOf(sales.TrackingNO);
+					if(pro.length() >= 34)
+						pro = pro.substring(pro.length()-12,pro.length());
+					
+					fileWriter.append("PRO# "+pro);
+				}
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append("TRUE");
 				fileWriter.append(COMMA_DELIMITER);
