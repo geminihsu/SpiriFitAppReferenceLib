@@ -10,5 +10,6 @@ public interface ContainerCallBackFunction {
 	public void resultCode(int code);
 	public void addContainerInfo(List<Containerbean> items);
 	public void getContainerItems(List<Containerbean> items);
+	public void getContainerItemsByContainerNo(List<Containerbean> items);
 	public void deleteContainerIteam(boolean result);
 }

@@ -98,10 +98,15 @@ public class ContainerRepositoryImplRetrofit {
 				.client(okHttpClient)
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		ContainerCallback service = retrofit.create(ContainerCallback.class);
-
-		Call<List<Containerbean>> items = service.getItemsBycontainerNo(containerNo);
-		// System.out.println(items.execute().toString());
-		return items.execute().body();
+	
+		Response<List<Containerbean>> request = service.getItemsBycontainerNo(containerNo).execute();
+		int code = request.code();
+		List<Containerbean> resultData = null;
+		if (code == HttpRequestCode.HTTP_REQUEST_OK) {
+			resultData = request.body();
+			containerServiceCallBackFunction.getContainerItemsByContainerNo(resultData);
+		}
+		return resultData;
 	}
 
 	public List<Containerbean> updateItem(List<Containerbean> item) throws Exception {
