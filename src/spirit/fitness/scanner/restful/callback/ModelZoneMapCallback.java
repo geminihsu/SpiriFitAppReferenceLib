@@ -17,6 +17,7 @@ import spirit.fitness.scanner.model.Itembean;
 import spirit.fitness.scanner.model.ModelDailyReportbean;
 import spirit.fitness.scanner.model.ModelZone2bean;
 import spirit.fitness.scanner.model.Modelbean;
+import spirit.fitness.scanner.model.PickUpZoneMap;
 
 /**
  * Created by User on 5/1/2017.
@@ -37,6 +38,10 @@ public interface ModelZoneMapCallback {
 	
 	@GET("FGService/api/ModelZoneMaps/{modelNo}")
 	Call<List<ModelZone2bean>> getItemsByModelNo(@Path("modelNo") Integer modelNo);
+	
+    @GET("FGService/api/ModelZoneMaps/zone/{zoneCode}")
+    Call<List<PickUpZoneMap>> getPickUpByZone(@Path("zoneCode") Integer zoneCode);
+
 	//Post one item
 	/*@POST("/api/FGInventory")
 	Call<Itembean> createItem(@Body Itembean itembean);*/

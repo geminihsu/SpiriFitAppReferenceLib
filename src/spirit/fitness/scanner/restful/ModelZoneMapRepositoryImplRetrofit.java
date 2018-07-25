@@ -16,6 +16,7 @@ import spirit.fitness.scanner.model.Itembean;
 import spirit.fitness.scanner.model.ModelDailyReportbean;
 import spirit.fitness.scanner.model.ModelZone2bean;
 import spirit.fitness.scanner.model.Modelbean;
+import spirit.fitness.scanner.model.PickUpZoneMap;
 import spirit.fitness.scanner.restful.callback.InventoryCallback;
 import spirit.fitness.scanner.restful.callback.ModelCallback;
 import spirit.fitness.scanner.restful.callback.ModelZoneMapCallback;
@@ -67,6 +68,28 @@ public class ModelZoneMapRepositoryImplRetrofit {
 		Response<List<ModelZone2bean>> request = service.getAllModelQtyReport().execute();
 		int code = request.code();
 		List<ModelZone2bean> result = retriveCode(code,request);
+		
+		return result;
+	}
+	
+public List<PickUpZoneMap> pickupZoneQty(int zoneCode) throws Exception {
+		
+		OkHttpClient okHttpClient = new OkHttpClient.Builder()  
+		        .connectTimeout(1, TimeUnit.MINUTES)
+		        .readTimeout(300, TimeUnit.SECONDS)
+		        .writeTimeout(15, TimeUnit.SECONDS)
+		        .build();
+		
+		
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl)
+				.client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create())
+				.build();
+		ModelZoneMapCallback service = retrofit.create(ModelZoneMapCallback.class);
+		
+		Response<List<PickUpZoneMap>> request = service.getPickUpByZone(zoneCode).execute();
+		int code = request.code();
+		List<PickUpZoneMap> result = retriveData(code,request);
 		
 		return result;
 	}
@@ -145,6 +168,20 @@ public class ModelZoneMapRepositoryImplRetrofit {
 			if (code == HttpRequestCode.HTTP_REQUEST_OK) {
 				resultData = request.body();
 				reportCallBackFunction.getModelDailyReportItems(resultData);
+			}
+			
+		}
+		return resultData;
+	}
+	
+	private List<PickUpZoneMap> retriveData(int code, Response<List<PickUpZoneMap>> request) {
+		List<PickUpZoneMap> resultData = null;
+
+		if (reportCallBackFunction != null) {
+			reportCallBackFunction.resultCode(code);
+			if (code == HttpRequestCode.HTTP_REQUEST_OK) {
+				resultData = request.body();
+				reportCallBackFunction.pickUpZone(resultData);
 			}
 			
 		}
