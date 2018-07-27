@@ -55,6 +55,7 @@ public class SalesJournal {
     public String TrackingNO;
     public String SN;
     public String SOCntIdx;
+    public String SalesTax;
     
     
     
