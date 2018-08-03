@@ -18,6 +18,8 @@ public class DailyShippingReportbean{
 	public String qty;
 	@SerializedName("TrackingNo")
 	public String trackingNo;
+	@SerializedName("BillTo")
+	public String BillTo;
 	@SerializedName("ShipVia")
 	public String shipVia;
 	@SerializedName("ShipState")
