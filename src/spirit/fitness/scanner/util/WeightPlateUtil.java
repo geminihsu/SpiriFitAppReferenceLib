@@ -28,7 +28,7 @@ public class WeightPlateUtil {
     private static String DROP_SHIP_FEE = "10048";
 
 	
-	private static String DROP_SHIP_FEE = "10048";
+
 	
 	public static boolean isWeightPlate(String item) {
 		if (item.equals(WEIGHT_PLATE_170Cartons) || item.equals(WEIGHT_PLATE_20_80)

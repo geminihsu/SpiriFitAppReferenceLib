@@ -40,6 +40,8 @@ public class Historybean {
     public String shipState;
     @SerializedName("ShipCity")
     public String shipCity;
+    @SerializedName("CustPoNo")
+    public String CustPoNo;
   
     @Override
     public String toString() {

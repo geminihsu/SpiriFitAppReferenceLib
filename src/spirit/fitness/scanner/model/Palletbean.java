@@ -27,5 +27,6 @@ public class Palletbean {
 	 public String createdDate;
 	 @SerializedName("Qty")
 	 public String qty;
-
+	 @SerializedName("CustPoNo")
+	 public String CustPoNo;
 }
