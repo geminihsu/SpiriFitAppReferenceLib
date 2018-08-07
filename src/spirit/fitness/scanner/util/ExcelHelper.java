@@ -28,7 +28,6 @@ import spirit.fitness.scanner.common.Constrant;
 import spirit.fitness.scanner.model.DailyShippingReportbean;
 import spirit.fitness.scanner.model.SalesJournal;
 
-
 import javax.swing.JTable;
 
 public class ExcelHelper {
@@ -86,9 +85,11 @@ public class ExcelHelper {
 			int j = 0;
 			for (int i = 0; i < model.getRowCount(); i++) {
 				for (j = 0; j < model.getColumnCount(); j++) {
-					Label row = new Label(j, i + 1, model.getValueAt(i, j).toString());
-					row.setCellFormat(cellFormat);
-					sheet1.addCell(row);
+					if (model.getValueAt(i, j) != null) {
+						Label row = new Label(j, i + 1, model.getValueAt(i, j).toString());
+						row.setCellFormat(cellFormat);
+						sheet1.addCell(row);
+					}
 				}
 			}
 			workbook1.write();
@@ -152,11 +153,12 @@ public class ExcelHelper {
 				salesJournal.AcountReceivable = country[Constrant.ACCOUNT_RECEIVABLE];
 				salesJournal.NotePrint = country[Constrant.NOTE_PRINT];
 				salesJournal.numberOfDistribution = country[Constrant.NUMBEROFDISTRIBUTION];
-				if(!salesJournal.SalesTax.equals(""))
-					salesJournal.SODistribution = String.valueOf(Integer.valueOf(country[Constrant.SODISTRIBUTION])+1);
+				if (!salesJournal.SalesTax.equals(""))
+					salesJournal.SODistribution = String
+							.valueOf(Integer.valueOf(country[Constrant.SODISTRIBUTION]) + 1);
 				else
 					salesJournal.SODistribution = String.valueOf(country[Constrant.SODISTRIBUTION]);
-				
+
 				salesJournal.Quantity = country[Constrant.QTY];
 
 				if (country[Constrant.ITEMID].equals(""))
@@ -590,8 +592,10 @@ public class ExcelHelper {
 					fileWriter.append(String.valueOf(sales.SN));
 				fileWriter.append(COMMA_DELIMITER);
 				int distribution = 0;
-				if(!sales.SalesTax.equals(""))
-				     distribution = Integer.valueOf(sales.SODistribution) -1;
+				if (!sales.SalesTax.equals(""))
+					distribution = Integer.valueOf(sales.SODistribution) - 1;
+				else
+					distribution = Integer.valueOf(sales.SODistribution);
 				fileWriter.append(String.valueOf(distribution));
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(String.valueOf(sales.Description));
@@ -711,7 +715,4 @@ public class ExcelHelper {
 	// readCSVFile();
 	// }
 
-	
-	
 }
-
