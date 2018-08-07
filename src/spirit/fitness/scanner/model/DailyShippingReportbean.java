@@ -32,5 +32,7 @@ public class DailyShippingReportbean{
 	
 	@SerializedName("SN")
 	public String sn;
-	
+    @SerializedName("CustPo")
+    public String CustPo;
+
 }
