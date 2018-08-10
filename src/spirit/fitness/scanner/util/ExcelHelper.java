@@ -23,6 +23,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import jxl.*;
+import jxl.format.UnderlineStyle;
 import jxl.write.*;
 import spirit.fitness.scanner.common.Constrant;
 import spirit.fitness.scanner.model.DailyShippingReportbean;
@@ -38,26 +39,88 @@ public class ExcelHelper {
 	public void fillData(JTable table, File file) {
 
 		try {
-
+			int[] total = new int[7];
+		
+			int totalCntIdx = 0;
+			
 			WritableWorkbook workbook1 = Workbook.createWorkbook(file);
 			WritableSheet sheet1 = workbook1.createSheet("First Sheet", 0);
 			WritableCellFormat cellFormat = new WritableCellFormat();
+			
+			WritableCellFormat cellheaderFormat = new WritableCellFormat();
+			workbook1.setColourRGB(Colour.OCEAN_BLUE,42, 82, 190);
+			cellheaderFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+			WritableFont TableFormat = new WritableFont(WritableFont.createFont("Calibri"), 11, WritableFont.BOLD,
+					false, UnderlineStyle.NO_UNDERLINE, Colour.WHITE);
+			cellheaderFormat.setFont(TableFormat); // set the font
+			cellheaderFormat.setBackground(Colour.OCEAN_BLUE); // Table background
+			cellheaderFormat.setAlignment(Alignment.CENTRE);
+			
+			
 			cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
-
+			WritableFont rowFormat = new WritableFont(WritableFont.createFont("Calibri"), 11, WritableFont.NO_BOLD,
+					false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK);
+			cellFormat.setFont(rowFormat); // set the font
+			cellFormat.setBackground(Colour.WHITE); // Table background
+			cellFormat.setAlignment(Alignment.CENTRE);
+			
+			WritableCellFormat oddRowFormat = new WritableCellFormat();
+			oddRowFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+			WritableFont oddRowFont = new WritableFont(WritableFont.createFont("Calibri"), 11, WritableFont.NO_BOLD,
+					false, UnderlineStyle.NO_UNDERLINE, Colour.BLACK);
+			oddRowFormat.setFont(oddRowFont); // set the font
+			
+			workbook1.setColourRGB(Colour.ICE_BLUE,235, 235, 255);
+			oddRowFormat.setBackground(Colour.ICE_BLUE); // Table background
+			oddRowFormat.setAlignment(Alignment.CENTRE);
+				
 			TableModel model = table.getModel();
 
 			for (int i = 0; i < model.getColumnCount(); i++) {
 				Label column = new Label(i, 0, model.getColumnName(i));
-				column.setCellFormat(cellFormat);
+				
+				
+				column.setCellFormat(cellheaderFormat);
+				
 				sheet1.addCell(column);
 			}
 			int j = 0;
 			for (int i = 0; i < model.getRowCount(); i++) {
 				for (j = 0; j < model.getColumnCount(); j++) {
 					Label row = new Label(j, i + 1, model.getValueAt(i, j).toString());
-					row.setCellFormat(cellFormat);
+					
+					if(i == 1)
+						sheet1.setColumnView(i, 50);
+					else if(i>1 && j >=2) 
+					{
+					total[j-2] += Integer.valueOf(model.getValueAt(i, j).toString());
+					    
+					}else if(i == 6 || i == 7)
+						sheet1.setColumnView(i, 12);
+					if(i % 2 == 0)
+						row.setCellFormat(oddRowFormat);
+					else
+						row.setCellFormat(cellFormat);
 					sheet1.addCell(row);
 				}
+			}
+			totalCntIdx =0;
+			for (j = 0; j < model.getColumnCount(); j++) {
+				Label row = null;
+			if(j == 0)
+				row = new Label(j, model.getRowCount() + 1, "Total");
+			else if(j == 1)
+				row = new Label(j, model.getRowCount() + 1, "");
+			else
+				row = new Label(j, model.getRowCount() + 1, String.valueOf(total[totalCntIdx++]));
+			
+			if(model.getRowCount() == 1)
+				sheet1.setColumnView(model.getRowCount()-1, 50);
+			else if(model.getRowCount() == 6 || model.getRowCount() == 7)
+				sheet1.setColumnView(model.getRowCount()-1, 12);
+			
+				row.setCellFormat(cellheaderFormat);
+			sheet1.addCell(row);
 			}
 			workbook1.write();
 			workbook1.close();
