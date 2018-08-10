@@ -66,6 +66,7 @@ public class Constrant {
     public static Color DISPALY_ITEMS_TABLE_COLOR = new java.awt.Color(255, 255, 240);
     public static Color BUTTON_PANEL_BACKGROUND_COLOR = new java.awt.Color(230, 230, 250);
     public static Color BUTTON_BACKGROUN_COLOR = new java.awt.Color(255, 255, 240);
+    public static Color DAILY_REPORT_DISPALY_HEADER_ITEMS_TABLE_COLOR = new java.awt.Color(0, 47, 167);
     
      
   //SalesJournal attributes index
