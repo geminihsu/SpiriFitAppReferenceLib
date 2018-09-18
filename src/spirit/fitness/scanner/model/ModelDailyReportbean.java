@@ -8,6 +8,11 @@ public class ModelDailyReportbean{
 	public String ModelNo;
 	@SerializedName("ModelFG")
 	public String ModelFG;
+	
+	@SerializedName("Brand")
+	public String Brand;
+	@SerializedName("Category")
+	public String Category;
 	@SerializedName("Previous")
 	public Integer Previous;
 	@SerializedName("Shipped")
