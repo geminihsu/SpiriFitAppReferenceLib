@@ -39,7 +39,7 @@ public class ExcelHelper {
 	public void fillData(JTable table, File file) {
 
 		try {
-			int[] total = new int[7];
+			int[] total = new int[9];
 		
 			int totalCntIdx = 0;
 			
@@ -87,15 +87,22 @@ public class ExcelHelper {
 			int j = 0;
 			for (int i = 0; i < model.getRowCount(); i++) {
 				for (j = 0; j < model.getColumnCount(); j++) {
+					
+					if(model.getValueAt(i, j) == null)
+						continue;
+					
 					Label row = new Label(j, i + 1, model.getValueAt(i, j).toString());
 					
 					if(i == 1)
 						sheet1.setColumnView(i, 50);
-					else if(i>1 && j >=2) 
+					else
+						if(i == 2 || i == 3)
+							sheet1.setColumnView(i, 12);
+					else if(i>3 && j >=4) 
 					{
 					total[j-2] += Integer.valueOf(model.getValueAt(i, j).toString());
 					    
-					}else if(i == 6 || i == 7)
+					}else if(i == 8 || i == 9)
 						sheet1.setColumnView(i, 12);
 					if(i % 2 == 0)
 						row.setCellFormat(oddRowFormat);
@@ -116,7 +123,7 @@ public class ExcelHelper {
 			
 			if(model.getRowCount() == 1)
 				sheet1.setColumnView(model.getRowCount()-1, 50);
-			else if(model.getRowCount() == 6 || model.getRowCount() == 7)
+			else if(model.getRowCount() == 8 || model.getRowCount() == 9)
 				sheet1.setColumnView(model.getRowCount()-1, 12);
 			
 				row.setCellFormat(cellheaderFormat);
