@@ -1,6 +1,6 @@
 package spirit.fitness.scanner.util;
 
-public class ModelNoUtil {
+public class ModelNoUntil {
 	
 	public static boolean isInteger(String s) {
 	    return isInteger(s,10);
