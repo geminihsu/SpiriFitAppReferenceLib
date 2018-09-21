@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-public class PrintJtableUtil
+public class PrintTableUntil
 {
 	/**
      * Print the table result.
