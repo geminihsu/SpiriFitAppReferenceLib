@@ -1,4 +1,4 @@
-package spirit.fitness.scanner.util;
+package spirit.fitness.scanner.printer.until;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -19,13 +19,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.SwingWorker;
 
-public class PrintPreviewUitl {
+public class PrintPreviewUntil {
 
 	private JTextPane mTextPane;
 	private PrintPreview preview;
 	private PageFormat pf;
 
-	public PrintPreviewUitl(String content) {
+	public PrintPreviewUntil(String content) {
 
 		mTextPane = new JTextPane();
 		mTextPane.setContentType("text");

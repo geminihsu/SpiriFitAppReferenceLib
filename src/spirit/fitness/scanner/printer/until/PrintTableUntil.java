@@ -1,4 +1,4 @@
-package spirit.fitness.scanner.util;
+package spirit.fitness.scanner.printer.until;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import spirit.fitness.string.printTableView.Block;
 import spirit.fitness.string.printTableView.Board;
 import spirit.fitness.string.printTableView.Table;
-public class PrintTableUtil {
+public class PrintTableUntil {
 
 	
 	public static String printReport(List<String> headersList,List<List<String>> rowsList) 

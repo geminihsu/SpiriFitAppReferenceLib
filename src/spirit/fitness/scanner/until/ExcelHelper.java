@@ -1,4 +1,4 @@
-package spirit.fitness.scanner.util;
+package spirit.fitness.scanner.until;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
