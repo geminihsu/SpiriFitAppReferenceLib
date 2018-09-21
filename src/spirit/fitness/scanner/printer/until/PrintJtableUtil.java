@@ -1,4 +1,4 @@
-package spirit.fitness.scanner.util;
+package spirit.fitness.scanner.printer.until;
 
 import java.awt.print.PrinterException;
 import java.text.MessageFormat;

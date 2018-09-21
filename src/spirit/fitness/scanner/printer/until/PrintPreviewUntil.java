@@ -1,4 +1,4 @@
-package spirit.fitness.scanner.util;
+package spirit.fitness.scanner.printer.until;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

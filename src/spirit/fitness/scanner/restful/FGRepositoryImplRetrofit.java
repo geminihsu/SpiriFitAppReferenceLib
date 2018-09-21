@@ -17,8 +17,8 @@ import spirit.fitness.scanner.common.HttpRequestCode;
 import spirit.fitness.scanner.model.Itembean;
 import spirit.fitness.scanner.restful.callback.InventoryCallback;
 import spirit.fitness.scanner.restful.listener.InventoryCallBackFunction;
-import spirit.fitness.scanner.util.LoadingFrameHelper;
-import spirit.fitness.scanner.util.NetWorkHandler;
+import spirit.fitness.scanner.until.LoadingFrameHelper;
+import spirit.fitness.scanner.until.NetWorkHandler;
 
 public class FGRepositoryImplRetrofit {
 

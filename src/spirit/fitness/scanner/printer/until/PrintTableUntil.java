@@ -1,4 +1,4 @@
-package spirit.fitness.scanner.util;
+package spirit.fitness.scanner.printer.until;
 
 import java.util.Arrays;
 import java.util.List;

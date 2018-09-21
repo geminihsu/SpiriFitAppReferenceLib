@@ -1,4 +1,4 @@
-package spirit.fitness.scanner.util;
+package spirit.fitness.scanner.until;
 
 import spirit.fitness.scanner.common.Constrant;
 

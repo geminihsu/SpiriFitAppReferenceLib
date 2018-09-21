@@ -21,7 +21,7 @@ import spirit.fitness.scanner.restful.callback.HistoryCallback;
 import spirit.fitness.scanner.restful.callback.InventoryCallback;
 import spirit.fitness.scanner.restful.listener.HistoryCallBackFunction;
 import spirit.fitness.scanner.restful.listener.InventoryCallBackFunction;
-import spirit.fitness.scanner.util.NetWorkHandler;
+import spirit.fitness.scanner.until.NetWorkHandler;
 
 public class HistoryRepositoryImplRetrofit {
 
