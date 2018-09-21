@@ -95,6 +95,9 @@ public class ExcelHelper {
 					
 					if(i == 1)
 						sheet1.setColumnView(i, 50);
+					else
+						if(i == 2 || i == 3)
+							sheet1.setColumnView(i, 12);
 					else if(i>3 && j >=4) 
 					{
 					total[j-2] += Integer.valueOf(model.getValueAt(i, j).toString());
