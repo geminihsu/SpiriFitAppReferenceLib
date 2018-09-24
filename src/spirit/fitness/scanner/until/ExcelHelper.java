@@ -267,6 +267,12 @@ public class ExcelHelper {
 					if (i.sn != null && snMap.contains(i.sn))
 						continue;
 
+					if(salesJournal.ItemID.equals("450887"))
+						i.itemID = "450887";
+					
+					if(salesJournal.ItemID.equals("115816"))
+						i.itemID = "115816";
+					
 					if (i.itemID.equals(salesJournal.ItemID) && !i.itemID.equals("")) {
 
 						SalesJournal salesJournal2 = copyData(salesJournal);
