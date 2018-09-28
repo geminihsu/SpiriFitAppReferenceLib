@@ -16,6 +16,7 @@ import retrofit2.http.Query;
 import spirit.fitness.scanner.model.DailyShippingReportbean;
 import spirit.fitness.scanner.model.Historybean;
 import spirit.fitness.scanner.model.Itembean;
+import spirit.fitness.scanner.model.SerialNoRecord;
 /**
  * Created by User on 5/1/2017.
  */
@@ -38,6 +39,9 @@ public interface HistoryCallback {
 	Call<Itembean> createItem(@Body Itembean itembean);*/
 	@GET("FGService/api/Histories/dailyship/{date}")
 	Call<List<DailyShippingReportbean>> getDailyReportItems(@Path("date") String location);
+	
+	@GET("FGService/api/Histories/serialNo/{serialNo}")
+	Call<List<SerialNoRecord>> getItemsBySerialNo(@Path("serialNo") String serialNo);
 	
 	//Post ArrayList items
 	@POST("FGService/api/Histories")
