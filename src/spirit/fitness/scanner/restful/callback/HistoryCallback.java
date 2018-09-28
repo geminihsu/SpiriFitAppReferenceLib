@@ -44,8 +44,6 @@ public interface HistoryCallback {
 	@GET("api/Histories/dailyship/{date}")
 	Call<List<DailyShippingReportbean>> getDailyReportItems(@Path("date") String location);
 	
-	@GET("FGService/api/Histories/serialNo/{serialNo}")
-	Call<List<SerialNoRecord>> getItemsBySerialNo(@Path("serialNo") String serialNo);
 	
 	//Post ArrayList items
 	@POST("api/Histories")
