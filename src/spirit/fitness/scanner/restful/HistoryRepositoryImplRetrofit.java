@@ -17,6 +17,7 @@ import spirit.fitness.scanner.common.HttpRequestCode;
 import spirit.fitness.scanner.model.DailyShippingReportbean;
 import spirit.fitness.scanner.model.Historybean;
 import spirit.fitness.scanner.model.Itembean;
+import spirit.fitness.scanner.model.SerialNoRecord;
 import spirit.fitness.scanner.restful.callback.HistoryCallback;
 import spirit.fitness.scanner.restful.callback.InventoryCallback;
 import spirit.fitness.scanner.restful.listener.HistoryCallBackFunction;
@@ -88,7 +89,20 @@ public class HistoryRepositoryImplRetrofit {
 		return items.execute().body();
 	}
 	
+	public List<SerialNoRecord> getItemsBySN(String sn) throws Exception {
+		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
+				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(Constrant.webUrl).client(okHttpClient)
+				.addConverterFactory(GsonConverterFactory.create()).build();
+		HistoryCallback service = retrofit.create(HistoryCallback.class);
+		Response<List<SerialNoRecord>> request = service.getItemsBySerialNo(sn).execute();
+		int code = request.code();
 
+		List<SerialNoRecord> result = returnSNRecord(code, request);
+
+		return result;
+	}
+	
 	public List<Historybean> getItemsByDate(String date) throws Exception {
 		OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS)
 				.readTimeout(300, TimeUnit.SECONDS).writeTimeout(300, TimeUnit.SECONDS).build();
@@ -207,6 +221,19 @@ public class HistoryRepositoryImplRetrofit {
 			if (code == HttpRequestCode.HTTP_REQUEST_OK) {
 				resultData = request.body();
 				historyServiceCallBackFunction.getHistoryItems(resultData);
+			}
+		}
+		return resultData;
+	}
+	
+	private List<SerialNoRecord> returnSNRecord(int code, Response<List<SerialNoRecord>> request) {
+		List<SerialNoRecord> resultData = null;
+
+		if (historyServiceCallBackFunction != null) {
+			historyServiceCallBackFunction.resultCode(code);
+			if (code == HttpRequestCode.HTTP_REQUEST_OK) {
+				resultData = request.body();
+				historyServiceCallBackFunction.getSerialNoRecord(resultData);
 			}
 		}
 		return resultData;
