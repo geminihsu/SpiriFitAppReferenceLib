@@ -22,7 +22,7 @@ import spirit.fitness.scanner.restful.callback.HistoryCallback;
 import spirit.fitness.scanner.restful.callback.InventoryCallback;
 import spirit.fitness.scanner.restful.listener.HistoryCallBackFunction;
 import spirit.fitness.scanner.restful.listener.InventoryCallBackFunction;
-import spirit.fitness.scanner.until.NetWorkHandler;
+import spirit.fitness.scanner.until.NetWorkHelper;
 
 public class HistoryRepositoryImplRetrofit {
 
@@ -70,7 +70,7 @@ public class HistoryRepositoryImplRetrofit {
 
 			result = retriveCode(code, request);
 		} catch (Exception e) {
-			NetWorkHandler.getInstance();
+			NetWorkHelper.getInstance();
 		    //JOptionPane.showMessageDialog(null, "Please check network configuration.");
 			if (historyServiceCallBackFunction != null)
 				historyServiceCallBackFunction.exception(e.toString());
