@@ -18,7 +18,7 @@ import spirit.fitness.scanner.model.Itembean;
 import spirit.fitness.scanner.restful.callback.InventoryCallback;
 import spirit.fitness.scanner.restful.listener.InventoryCallBackFunction;
 import spirit.fitness.scanner.until.LoadingFrameHelper;
-import spirit.fitness.scanner.until.NetWorkHandler;
+import spirit.fitness.scanner.until.NetWorkHelper;
 
 public class FGRepositoryImplRetrofit {
 
@@ -83,7 +83,7 @@ public class FGRepositoryImplRetrofit {
 			int code = request.code();
 			result = retriveCode(code, request);
 		} catch (Exception e) {
-			NetWorkHandler.getInstance();
+			NetWorkHelper.getInstance();
 			// JOptionPane.showMessageDialog(null, "Please check network configuration.");
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.exception(e.toString());
@@ -155,7 +155,7 @@ public class FGRepositoryImplRetrofit {
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.checkMoveItems(result);
 		} catch (Exception e) {
-			NetWorkHandler.getInstance();
+			NetWorkHelper.getInstance();
 			// JOptionPane.showMessageDialog(null, "Please check network configuration.");
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.exception(e.toString());
@@ -186,7 +186,7 @@ public class FGRepositoryImplRetrofit {
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.checkInventoryZone2Items(code, result);
 		} catch (Exception e) {
-			NetWorkHandler.getInstance();
+			NetWorkHelper.getInstance();
 			// JOptionPane.showMessageDialog(null, "Please check network configuration.");
 			if (inventoryServiceCallBackFunction != null)
 				inventoryServiceCallBackFunction.exception(e.toString());
