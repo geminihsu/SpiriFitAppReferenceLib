@@ -19,15 +19,15 @@ import javax.swing.JOptionPane;
 
 import spirit.fitness.scanner.common.Constrant;
 
-public class NetWorkHandler {
+public class NetWorkHelper {
 
-	private static NetWorkHandler netWorkHandler;
+	private static NetWorkHelper netWorkHandler;
 
 	private static boolean isNetworkIssue;
 
-	public static NetWorkHandler getInstance() {
+	public static NetWorkHelper getInstance() {
 		if (netWorkHandler == null) {
-			netWorkHandler = new NetWorkHandler();
+			netWorkHandler = new NetWorkHelper();
 			isNetworkIssue = true;
 		}
 		return netWorkHandler;
@@ -40,7 +40,7 @@ public class NetWorkHandler {
 			isNetworkIssue = false;
 			netWorkHandler = null;
 			JOptionPane.showMessageDialog(null, "Please check network configuration.");
-			NetWorkHandler.backUpSerialNo(loadingframe);
+			NetWorkHelper.backUpSerialNo(loadingframe);
 		}
 	}
 

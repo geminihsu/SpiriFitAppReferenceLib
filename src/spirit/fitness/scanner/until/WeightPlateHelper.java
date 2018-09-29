@@ -1,6 +1,6 @@
 package spirit.fitness.scanner.until;
 
-public class WeightPlateUtil {
+public class WeightPlateHelper {
 
 	private static final String WEIGHT_PLATE_170Cartons = "900170";
 	private static final String WEIGHT_PLATE_20_80 = "990080";
