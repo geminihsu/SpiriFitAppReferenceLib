@@ -3,7 +3,7 @@ This Library implements the REST-Ful API interface to send the HTTP request to o
 # Develop tool
 * Operation System: Window 10 Pro  
 * Develop IDE tool: Eclipse 4.7.2
-# 3rd party libray
+# 3rd party library
 * Retrofit 2.3.0  
 * OKHttp 3.8.0  
 * java mail 1.4.4  
